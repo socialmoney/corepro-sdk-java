@@ -37,7 +37,6 @@ public class Main {
 			for(int i=0;i<accounts.size();i++){
 				Account a = accounts.get(i);
 				System.out.println(a);
-				System.out.println(a.getRequestId());
 			}
 			
 		} catch (Exception e) {
