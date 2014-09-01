@@ -12,6 +12,8 @@ public class Connection {
 	private String apiKey;
 	private String apiSecret;
 	private String headerValue;
+	private String proxyHost;
+	private Integer proxyPort;
 	
 	public Connection() {
 		
@@ -22,7 +24,13 @@ public class Connection {
 		setApiSecret(apiSecret);
 		setDomainName(domainName);
 	}
-	
+
+	public Connection(String apiKey, String apiSecret, String domainName, String proxyHost, Integer proxyPort){
+		this(apiKey, apiSecret, domainName);
+		setProxyHost(proxyHost);
+		setProxyPort(proxyPort);
+	}
+
 	public static Connection createFromConfig(String apiKeyOverride, String apiSecretOverride, String domainNameOverride) throws CoreProApiException {
 		Connection c = new Connection();
 		if (apiKeyOverride != null){
@@ -40,6 +48,14 @@ public class Connection {
 			c.setDomainName(domainNameOverride);
 		} else {
 			c.setDomainName(Util.readProperty("CoreProDomainName"));
+		}
+		
+		c.setProxyHost(Util.readProperty("CoreProProxyHost"));
+		try {
+			Integer val = Integer.parseInt(Util.readProperty("CoreProProxyPort"));
+			c.setProxyPort(val);
+		} catch (Exception ex){
+			// eat any integer parsing errors here
 		}
 		
 		if (c.getDomainName() == null || c.getDomainName() == ""){
@@ -105,6 +121,22 @@ public class Connection {
 			
 		}
 		return headerValue;
+	}
+
+	public String getProxyHost() {
+		return proxyHost;
+	}
+
+	public void setProxyHost(String proxyHost) {
+		this.proxyHost = proxyHost;
+	}
+
+	public Integer getProxyPort() {
+		return proxyPort;
+	}
+
+	public void setProxyPort(Integer proxyPort) {
+		this.proxyPort = proxyPort;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import com.google.gson.reflect.TypeToken;
 
 import io.corepro.sdk.models.Envelope;
+import io.corepro.sdk.models.FileContent;
 import io.corepro.sdk.models.ModelBase;
 import io.corepro.sdk.utils.Requestor;
 
@@ -28,6 +29,14 @@ public class BankDocument extends ModelBase {
 		
 		ArrayList<BankDocument> docs = Requestor.performGet(String.format("bankdocument/list/%d/%d",  cultureName, documentType), connection, envelope, envelopeType, userDefinedObjectForLogging);
 		return docs;
+	}
+	
+	public static FileContent download(String cultureName, Integer documentId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+		Envelope<FileContent> envelope = new Envelope<FileContent>();
+		Type envelopeType = new TypeToken<Envelope<FileContent>>(){}.getType();
+		
+		FileContent fc = Requestor.performGet(String.format("bankdocument/download/%d/%i",  cultureName, documentId), connection, envelope, envelopeType, userDefinedObjectForLogging);
+		return fc;
 	}
 
 }

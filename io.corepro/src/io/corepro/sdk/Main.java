@@ -25,12 +25,12 @@ public class Main {
 		// Requestor.useProxy("localhost",  8888);
 		
 		try {
-			int customerId = 0;    // need a valid customerId here
-			String apiKey = "";    // need a valid API Key here
-			String apiSecret = ""; // need a valid API Secret here
-			String domainName = "sandbox-api.corepro.io";
+			int customerId = 2654;    // need a valid customerId here
+//			String apiKey = "";    // need a valid API Key here
+//			String apiSecret = ""; // need a valid API Secret here
+//			String domainName = "sandbox-api.corepro.io";
 			
-			Connection connection = new Connection(apiKey, apiSecret, domainName);
+			Connection connection = null; //new Connection(apiKey, apiSecret, domainName);
 			
 			// example: list all accounts for the given customer
 			ArrayList<Account> accounts = Account.list(customerId, connection, null);
