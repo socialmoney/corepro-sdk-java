@@ -10,6 +10,7 @@ import io.corepro.sdk.models.Envelope;
 import io.corepro.sdk.models.ModelBase;
 import io.corepro.sdk.utils.Requestor;
 
+@Deprecated
 public class Document extends ModelBase {
 	public Integer bankId;
 	public Integer customerId;
@@ -23,9 +24,6 @@ public class Document extends ModelBase {
 	public Date expireDate;
 	
 	public static ArrayList<Document> list(String cultureName, String documentType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Document>> envelope = new Envelope<ArrayList<Document>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Document>>>(){}.getType();
 		

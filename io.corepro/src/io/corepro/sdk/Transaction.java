@@ -46,10 +46,6 @@ public class Transaction extends ModelBase {
 	}
 	
 	public ArrayList<Transaction> list(Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String begin = "";

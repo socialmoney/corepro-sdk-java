@@ -87,6 +87,9 @@ public class Requestor {
 
     
     public static <T> T performGet(String relativeUrl, Connection connectionInfo, Envelope<T> envelope, Type envelopeType, Object userDefinedObjectForLogging) throws CoreProApiException {
+		if (connectionInfo == null){
+			connectionInfo = Connection.createFromConfig(null,  null,  null);
+		}
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
     	
     	try {
@@ -114,6 +117,9 @@ public class Requestor {
 
     
     public static <T> T performPost(String relativeUrl, Connection connectionInfo, Object toPost, Envelope<T> envelope, Type envelopeType, Object userDefinedObjectForLogging) throws CoreProApiException {
+		if (connectionInfo == null){
+			connectionInfo = Connection.createFromConfig(null,  null,  null);
+		}
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
 
     	try {

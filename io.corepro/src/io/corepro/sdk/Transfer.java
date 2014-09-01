@@ -38,9 +38,6 @@ public class Transfer extends ModelBase {
 	}
 	
 	public ArrayList<Transfer> create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Transfer>> envelope = new Envelope<ArrayList<Transfer>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Transfer>>>(){}.getType();
 		return Requestor.performPost("transfer/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -54,9 +51,6 @@ public class Transfer extends ModelBase {
 	}
 	
 	public ArrayList<Transfer> voidTransaction(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Transfer>> envelope = new Envelope<ArrayList<Transfer>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Transfer>>>(){}.getType();
 		return Requestor.performPost("transfer/void", connection, this, envelope, envelopeType, userDefinedObjectForLogging);

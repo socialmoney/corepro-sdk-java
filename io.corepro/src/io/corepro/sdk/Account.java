@@ -69,9 +69,6 @@ public class Account extends ModelBase {
 	}
 	
 	public ArrayList<Account> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Account>> envelope = new Envelope<ArrayList<Account>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Account>>>(){}.getType();
 		
@@ -84,10 +81,6 @@ public class Account extends ModelBase {
 	}
 	
 	public Account get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<Account> envelope = new Envelope<Account>();
 		Type envelopeType = new TypeToken<Envelope<Account>>(){}.getType();
 		return Requestor.performGet(String.format("account/get/%d/%d",  this.getCustomerId(), this.getAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -141,9 +134,6 @@ public class Account extends ModelBase {
 	}
 	
 	public Integer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<AccountIdOnly> envelope = new Envelope<AccountIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<AccountIdOnly>>(){}.getType();
 		AccountIdOnly accountIdOnly = Requestor.performPost("account/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -176,9 +166,6 @@ public class Account extends ModelBase {
 	}
 	
 	public Boolean update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<Object> envelope = new Envelope<Object>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		Requestor.performPost("account/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);

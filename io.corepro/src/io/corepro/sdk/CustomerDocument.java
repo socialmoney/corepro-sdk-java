@@ -36,10 +36,6 @@ public class CustomerDocument extends ModelBase {
     }
     
     public void upload(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-		
 		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
     	

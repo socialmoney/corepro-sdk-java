@@ -34,10 +34,6 @@ public class Statement extends ModelBase {
 	}
 	
 	public ArrayList<Statement> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<ArrayList<Statement>> envelope = new Envelope<ArrayList<Statement>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Statement>>>(){}.getType();
 		return Requestor.performGet(String.format("statement/list/%d", this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -50,10 +46,6 @@ public class Statement extends ModelBase {
 	}
 	
 	public Statement get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<Statement> envelope = new Envelope<Statement>();
 		Type envelopeType = new TypeToken<Envelope<Statement>>(){}.getType();
 		return Requestor.performGet(String.format("statement/get/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -66,10 +58,6 @@ public class Statement extends ModelBase {
 	}
 	
 	public FileContent download(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<FileContent> envelope = new Envelope<FileContent>();
 		Type envelopeType = new TypeToken<Envelope<FileContent>>(){}.getType();
 		return Requestor.performGet(String.format("statement/download/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);

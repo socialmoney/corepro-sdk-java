@@ -45,10 +45,6 @@ public class Program extends ModelBase {
 	}
 	
 	public static Program get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<Program> envelope = new Envelope<Program>();
 		Type envelopeType = new TypeToken<Envelope<Program>>(){}.getType();
 		return Requestor.performGet("program/get", connection, envelope, envelopeType, userDefinedObjectForLogging);

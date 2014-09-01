@@ -72,9 +72,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public ArrayList<Customer> list(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Customer>> envelope = new Envelope<ArrayList<Customer>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Customer>>>(){}.getType();
 		
@@ -89,10 +86,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<Customer> envelope = new Envelope<Customer>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
 		return Requestor.performGet(String.format("customer/get/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -103,9 +96,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<Customer> envelope = new Envelope<Customer>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
 		return Requestor.performGet(String.format("customer/getByTag/%d/%d",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -156,9 +146,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerResponse initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<CustomerResponse> envelope = new Envelope<CustomerResponse>();
 		Type envelopeType = new TypeToken<Envelope<CustomerResponse>>(){}.getType();
 		return Requestor.performPost("customer/initiate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -171,9 +158,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerResponse verify(CustomerVerifyRequest request, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<CustomerResponse> envelope = new Envelope<CustomerResponse>();
 		Type envelopeType = new TypeToken<Envelope<CustomerResponse>>(){}.getType();
 		
@@ -213,9 +197,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		CustomerIdOnly idOnly = Requestor.performPost("externalaccount/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -254,9 +235,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerIdOnly update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		return Requestor.performPost("customer/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -272,9 +250,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerIdOnly deactivate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		return Requestor.performPost("customer/deactivate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -301,9 +276,6 @@ public class Customer extends ModelBase {
 	}
 	
 	public ArrayList<Customer> search(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<Customer>> envelope = new Envelope<ArrayList<Customer>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<Customer>>>(){}.getType();
 		return Requestor.performPost(String.format("customer/search?pageNumber=%d&pageSize=%d", pageNumber, pageSize), connection, this, envelope, envelopeType, userDefinedObjectForLogging);

@@ -77,9 +77,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public ArrayList<ExternalAccount> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ArrayList<ExternalAccount>> envelope = new Envelope<ArrayList<ExternalAccount>>();
 		Type envelopeType = new TypeToken<Envelope<ArrayList<ExternalAccount>>>(){}.getType();
 		
@@ -92,10 +89,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public ExternalAccount get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
-
 		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		ExternalAccount account = Requestor.performGet(String.format("externalaccount/get/%d/%d",  this.getCustomerId(), this.getExternalAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -107,9 +100,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public ExternalAccount getByTag(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		ExternalAccount account = Requestor.performGet(String.format("externalaccount/getByTag/%d/%d",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -136,9 +126,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Integer initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		ExternalAccountIdOnly accountIdOnly = Requestor.performPost("externalaccount/initiate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -151,9 +138,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean verify(BigDecimal amount1, BigDecimal amount2, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<Object> envelope = new Envelope<Object>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		
@@ -184,9 +168,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Integer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		ExternalAccountIdOnly accountIdOnly = Requestor.performPost("externalaccount/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -204,9 +185,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		Requestor.performPost("externalaccount/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
@@ -223,9 +201,6 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean deactivate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		if (connection == null){
-			connection = Connection.createFromConfig(null,  null,  null);
-		}
 		Envelope<Object> envelope = new Envelope<Object>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		Requestor.performPost("externalaccount/deactivate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
