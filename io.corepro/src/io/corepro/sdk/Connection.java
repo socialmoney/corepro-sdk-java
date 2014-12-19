@@ -12,7 +12,7 @@ public class Connection {
 	private String apiKey;
 	private String apiSecret;
 	private String headerValue;
-	private String proxyHost;
+	private String proxyServerName;
 	private Integer proxyPort;
 	
 	public Connection() {
@@ -25,9 +25,9 @@ public class Connection {
 		setDomainName(domainName);
 	}
 
-	public Connection(String apiKey, String apiSecret, String domainName, String proxyHost, Integer proxyPort){
+	public Connection(String apiKey, String apiSecret, String domainName, String proxyServerName, Integer proxyPort){
 		this(apiKey, apiSecret, domainName);
-		setProxyHost(proxyHost);
+		setProxyServerName(proxyServerName);
 		setProxyPort(proxyPort);
 	}
 
@@ -50,7 +50,7 @@ public class Connection {
 			c.setDomainName(Util.readProperty("CoreProDomainName"));
 		}
 		
-		c.setProxyHost(Util.readProperty("CoreProProxyHost"));
+		c.setProxyServerName(Util.readProperty("CoreProProxyServerName"));
 		try {
 			Integer val = Integer.parseInt(Util.readProperty("CoreProProxyPort"));
 			c.setProxyPort(val);
@@ -105,16 +105,18 @@ public class Connection {
 	public String getHeaderValue() throws UnsupportedEncodingException, NullPointerException {
 		if (headerValue == null){
 			try {
-				if (getApiKey() == null || getApiKey() == "" || getApiSecret() == null || getApiSecret() == "") {
-					throw new NullPointerException("Both apiKey and apiSecret must be specified when making a CorePro request");
-				}
-				
-				String rawHeader = getApiKey() + ":" + getApiSecret();
-				byte[] bytes = rawHeader.getBytes("UTF-8");
-				String b64 = Base64.encode(bytes);
-				
-				this.headerValue = "Basic " + b64;
-				
+                if (getApiKey() == null || getApiKey() == "" || getApiSecret() == null || getApiSecret() == "") {
+                    throw new NullPointerException("Both apiKey and apiSecret must be specified when making a CorePro request");
+                }
+
+                String rawHeader = getApiKey() + ":" + getApiSecret();
+                byte[] bytes = rawHeader.getBytes("UTF-8");
+                String b64 = Base64.encode(bytes);
+
+                this.headerValue = "Basic " + b64;
+            } catch (NullPointerException npe){
+                Logger.write(npe, null, null);
+                throw npe;
 			} catch (Exception ex){
 				Logger.write(ex, null, null);
 			}
@@ -123,12 +125,12 @@ public class Connection {
 		return headerValue;
 	}
 
-	public String getProxyHost() {
-		return proxyHost;
+	public String getProxyServerName() {
+		return proxyServerName;
 	}
 
-	public void setProxyHost(String proxyHost) {
-		this.proxyHost = proxyHost;
+	public void setProxyServerName(String proxyServerName) {
+		this.proxyServerName = proxyServerName;
 	}
 
 	public Integer getProxyPort() {

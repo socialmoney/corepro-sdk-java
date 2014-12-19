@@ -2,29 +2,29 @@ package io.corepro.sdk;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.reflect.TypeToken;
 
 import io.corepro.sdk.models.Envelope;
 import io.corepro.sdk.models.ModelBase;
-import io.corepro.sdk.models.ProgramInterestRate;
 import io.corepro.sdk.models.ProgramLimit;
 import io.corepro.sdk.utils.Requestor;
+import io.corepro.sdk.models.ProgramChecking;
+import io.corepro.sdk.models.ProgramECode;
+import io.corepro.sdk.models.ProgramPrepaid;
+import io.corepro.sdk.models.ProgramSavings;
 
 public class Program extends ModelBase {
 	
 	private String name;
 	private String verificationType;
-	private BigDecimal regDFeeAmount;
-	private BigDecimal regDMonthlyTransactionWithdrawCountMax;
-	private ProgramLimit perTransactionWithdrawLimit;
 	private ProgramLimit perUserDailyWithdrawLimit;
 	private ProgramLimit perUserMonthlyWithdrawLimit;
 	private ProgramLimit perProgramDailyWithdrawLimit;
 	
-	private ProgramLimit perTransactionDepositLimit;
 	private ProgramLimit perUserDailyDepositLimit;
 	private ProgramLimit perUserMonthlyDepositLimit;
 	private ProgramLimit perProgramDailyDepositLimit;
@@ -32,16 +32,24 @@ public class Program extends ModelBase {
 	private String website;
 	private Boolean isInternalToInternalTransferEnabled;
 	private BigDecimal decimalCount;
-	private Boolean isInterestEnabled;
-	private String allowedAccountType;
-	private Boolean isRecurringContributionEnabled;
-	
-	private ArrayList<ProgramInterestRate> interestRates;
+
 	private Date filledDate;
-	
+
+    private Integer perUserExternalAccountCountMax;
+    private Integer perUserAccountCountMax;
+    private BigDecimal perUserTotalAccountBalanceMax;
+
+    private Map<String, ProgramChecking> checkingProducts;
+    private Map<String, ProgramECode> eCodeProducts;
+    private Map<String, ProgramPrepaid> prepaidProducts;
+    private Map<String, ProgramSavings> savingsProducts;
+
 	public Program() {
 		super();
-		this.setInterestRates(new ArrayList<ProgramInterestRate>());
+        checkingProducts = new HashMap<String, ProgramChecking>();
+        eCodeProducts = new HashMap<String, ProgramECode>();
+        prepaidProducts = new HashMap<String, ProgramPrepaid>();
+        savingsProducts = new HashMap<String, ProgramSavings>();
 	}
 	
 	public static Program get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
@@ -65,32 +73,6 @@ public class Program extends ModelBase {
 
 	public void setVerificationType(String verificationType) {
 		this.verificationType = verificationType;
-	}
-
-	public BigDecimal getRegDFeeAmount() {
-		return regDFeeAmount;
-	}
-
-	public void setRegDFeeAmount(BigDecimal regDFeeAmount) {
-		this.regDFeeAmount = regDFeeAmount;
-	}
-
-	public BigDecimal getRegDMonthlyTransactionWithdrawCountMax() {
-		return regDMonthlyTransactionWithdrawCountMax;
-	}
-
-	public void setRegDMonthlyTransactionWithdrawCountMax(
-			BigDecimal regDMonthlyTransactionWithdrawCountMax) {
-		this.regDMonthlyTransactionWithdrawCountMax = regDMonthlyTransactionWithdrawCountMax;
-	}
-
-	public ProgramLimit getPerTransactionWithdrawLimit() {
-		return perTransactionWithdrawLimit;
-	}
-
-	public void setPerTransactionWithdrawLimit(
-			ProgramLimit perTransactionWithdrawLimit) {
-		this.perTransactionWithdrawLimit = perTransactionWithdrawLimit;
 	}
 
 	public ProgramLimit getPerUserDailyWithdrawLimit() {
@@ -117,14 +99,6 @@ public class Program extends ModelBase {
 	public void setPerProgramDailyWithdrawLimit(
 			ProgramLimit perProgramDailyWithdrawLimit) {
 		this.perProgramDailyWithdrawLimit = perProgramDailyWithdrawLimit;
-	}
-
-	public ProgramLimit getPerTransactionDepositLimit() {
-		return perTransactionDepositLimit;
-	}
-
-	public void setPerTransactionDepositLimit(ProgramLimit perTransactionDepositLimit) {
-		this.perTransactionDepositLimit = perTransactionDepositLimit;
 	}
 
 	public ProgramLimit getPerUserDailyDepositLimit() {
@@ -177,39 +151,6 @@ public class Program extends ModelBase {
 		this.decimalCount = decimalCount;
 	}
 
-	public Boolean getIsInterestEnabled() {
-		return isInterestEnabled;
-	}
-
-	public void setIsInterestEnabled(Boolean isInterestEnabled) {
-		this.isInterestEnabled = isInterestEnabled;
-	}
-
-	public String getAllowedAccountType() {
-		return allowedAccountType;
-	}
-
-	public void setAllowedAccountType(String allowedAccountType) {
-		this.allowedAccountType = allowedAccountType;
-	}
-
-	public Boolean getIsRecurringContributionEnabled() {
-		return isRecurringContributionEnabled;
-	}
-
-	public void setIsRecurringContributionEnabled(
-			Boolean isRecurringContributionEnabled) {
-		this.isRecurringContributionEnabled = isRecurringContributionEnabled;
-	}
-
-	public ArrayList<ProgramInterestRate> getInterestRates() {
-		return interestRates;
-	}
-
-	public void setInterestRates(ArrayList<ProgramInterestRate> interestRates) {
-		this.interestRates = interestRates;
-	}
-
 	public Date getFilledDate() {
 		return filledDate;
 	}
@@ -218,6 +159,60 @@ public class Program extends ModelBase {
 		this.filledDate = filledDate;
 	}
 
-	
-	
+
+    public Integer getPerUserExternalAccountCountMax() {
+        return perUserExternalAccountCountMax;
+    }
+
+    public void setPerUserExternalAccountCountMax(Integer perUserExternalAccountCountMax) {
+        this.perUserExternalAccountCountMax = perUserExternalAccountCountMax;
+    }
+
+    public Integer getPerUserAccountCountMax() {
+        return perUserAccountCountMax;
+    }
+
+    public void setPerUserAccountCountMax(Integer perUserAccountCountMax) {
+        this.perUserAccountCountMax = perUserAccountCountMax;
+    }
+
+    public BigDecimal getPerUserTotalAccountBalanceMax() {
+        return perUserTotalAccountBalanceMax;
+    }
+
+    public void setPerUserTotalAccountBalanceMax(BigDecimal perUserTotalAccountBalanceMax) {
+        this.perUserTotalAccountBalanceMax = perUserTotalAccountBalanceMax;
+    }
+
+    public Map<String, ProgramChecking> getCheckingProducts() {
+        return checkingProducts;
+    }
+
+    public void setCheckingProducts(Map<String, ProgramChecking> checkingProducts) {
+        this.checkingProducts = checkingProducts;
+    }
+
+    public Map<String, ProgramECode> getECodeProducts() {
+        return eCodeProducts;
+    }
+
+    public void setECodeProducts(Map<String, ProgramECode> eCodeProducts) {
+        this.eCodeProducts = eCodeProducts;
+    }
+
+    public Map<String, ProgramPrepaid> getPrepaidProducts() {
+        return prepaidProducts;
+    }
+
+    public void setPrepaidProducts(Map<String, ProgramPrepaid> prepaidProducts) {
+        this.prepaidProducts = prepaidProducts;
+    }
+
+    public Map<String, ProgramSavings> getSavingsProducts() {
+        return savingsProducts;
+    }
+
+    public void setSavingsProducts(Map<String, ProgramSavings> savingsProducts) {
+        this.savingsProducts = savingsProducts;
+    }
 }

@@ -4,7 +4,6 @@ import io.corepro.sdk.utils.Requestor;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class Main {
 	public static void main(String[] args) {
@@ -19,25 +18,34 @@ public class Main {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+
+
+        // 2014-12-18 bweaver - Moved proxy stuff to Connection object where it belongs
 		// for testing, you can use Fiddler web proxy
-		// Requestor.useProxy("localhost",  8888);
-		
+		//Requestor.useProxy("localhost",  8888);
+
 		try {
-			int customerId = 2654;    // need a valid customerId here
+
+			//int customerId = 2654;    // need a valid customerId here
 //			String apiKey = "";    // need a valid API Key here
 //			String apiSecret = ""; // need a valid API Secret here
 //			String domainName = "sandbox-api.corepro.io";
 			
-			Connection connection = null; //new Connection(apiKey, apiSecret, domainName);
-			
-			// example: list all accounts for the given customer
-			ArrayList<Account> accounts = Account.list(customerId, connection, null);
-			for(int i=0;i<accounts.size();i++){
-				Account a = accounts.get(i);
-				System.out.println(a);
-			}
+			//Connection connection = null; //new Connection(apiKey, apiSecret, domainName);
+
+//            Customer c = Customer.get(6507, connection, null);
+//
+//            Program p = Program.get(connection, null);
+//
+//            System.out.println(p.getPrepaidProducts().get("prepaid").getPerTransactionDepositLimit().getMaximumAmount());
+
+
+//			// example: list all accounts for the given customer
+//			ArrayList<Account> accounts = Account.list(customerId, connection, null);
+//			for(int i=0;i<accounts.size();i++){
+//				Account a = accounts.get(i);
+//				System.out.println(a);
+//			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

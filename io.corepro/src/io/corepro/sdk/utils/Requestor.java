@@ -23,10 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 
 
 public class Requestor {
@@ -64,14 +61,6 @@ public class Requestor {
 		Requestor.initTrustManager(Requestor.trustAllCertificates);
 	}
 	
-	private static String __proxyHostName;
-	private static int __proxyPort;
-
-	public static void useProxy(String proxyHostName, int proxyPort){
-		__proxyHostName = proxyHostName;
-		__proxyPort = proxyPort;
-	}
-
     private static String __defaultDomainName;
     public static String getDefaultDomainName() throws Exception {
         if (__defaultDomainName == null || __defaultDomainName.trim().equals("")) {
@@ -90,20 +79,17 @@ public class Requestor {
 		if (connectionInfo == null){
 			connectionInfo = Connection.createFromConfig(null,  null,  null);
 		}
-		if (connectionInfo.getProxyHost() != null && connectionInfo.getProxyHost() != ""){
-			__proxyHostName = connectionInfo.getProxyHost();
-			__proxyPort = connectionInfo.getProxyPort();
-		}
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
     	
     	try {
-    	
-	    	HttpURLConnection conn = null;
-	    	if (__proxyHostName != null){
-	    		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(__proxyHostName, __proxyPort));
-	        	conn = (HttpURLConnection)(new URL(url).openConnection(proxy));
+
+	    	HttpsURLConnection conn = null;
+            if (connectionInfo.getProxyServerName() != null && connectionInfo.getProxyServerName() != ""
+                    && connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0){
+	    		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
+	        	conn = (HttpsURLConnection)(new URL(url).openConnection(proxy));
 	    	} else {
-	        	conn = (HttpURLConnection)(new URL(url).openConnection());
+	        	conn = (HttpsURLConnection)(new URL(url).openConnection());
 	    	}
 	    	
 	
@@ -124,16 +110,13 @@ public class Requestor {
 		if (connectionInfo == null){
 			connectionInfo = Connection.createFromConfig(null,  null,  null);
 		}
-		if (connectionInfo.getProxyHost() != null && connectionInfo.getProxyHost() != ""){
-			__proxyHostName = connectionInfo.getProxyHost();
-			__proxyPort = connectionInfo.getProxyPort();
-		}
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
 
     	try {
 	    	HttpURLConnection conn = null;
-	    	if (__proxyHostName != null){
-	    		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(__proxyHostName, __proxyPort));
+            if (connectionInfo.getProxyServerName() != null && connectionInfo.getProxyServerName() != ""
+                    && connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0){
+                Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
 	        	conn = (HttpURLConnection)(new URL(url).openConnection(proxy));
 	    	} else {
 	        	conn = (HttpURLConnection)(new URL(url).openConnection());
@@ -273,7 +256,7 @@ public class Requestor {
 					}
 					
 				} catch (Exception ex){
-					
+					System.out.println(ex.getMessage());
 				}
 				
     	}
