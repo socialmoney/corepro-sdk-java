@@ -23,6 +23,7 @@ import io.corepro.sdk.models.Envelope;
 import io.corepro.sdk.models.ModelBase;
 import io.corepro.sdk.utils.Requestor;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,22 +60,28 @@ public class Card extends ModelBase {
     private Date lastModifiedDate;
     private String reissueReasonTypeCode;
 
-    public ArrayList<Card> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+    public ArrayList<Card> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
         Envelope<ArrayList<Card>> envelope = new Envelope<ArrayList<Card>>();
         Type envelopeType = new TypeToken<Envelope<ArrayList<Card>>>(){}.getType();
         return Requestor.performGet(String.format("card/list/%d",  this.customerId), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
-    public Card get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+    public Card get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
         Envelope<Card> envelope = new Envelope<Card>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performGet(String.format("card/get/%d/%d",  this.customerId, this.cardId), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
-    public Card getByTag(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+    public Card getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
         Envelope<Card> envelope = new Envelope<Card>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
-        return Requestor.performGet(String.format("card/getbytag/%d/%s",  this.customerId, this.tag), connection, envelope, envelopeType, userDefinedObjectForLogging);
+        String urlEncodedTag = this.getTag();
+        try {
+            urlEncodedTag = java.net.URLEncoder.encode(urlEncodedTag, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Requestor.performGet(String.format("card/getbytag/%d/%s",  this.customerId, urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{

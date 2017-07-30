@@ -150,7 +150,8 @@ public class Account extends ModelBase {
 		}
 		Envelope<Account> envelope = new Envelope<Account>();
 		Type envelopeType = new TypeToken<Envelope<Account>>(){}.getType();
-		return Requestor.performGet(String.format("account/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+        String urlEncodedTag = java.net.URLEncoder.encode(this.getTag(), "UTF-8");
+        return Requestor.performGet(String.format("account/getByTag/%d/%s",  this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 	public static AccountClose close(Integer customerId, Integer accountId, Integer closeToAccountId, String transactionTag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {

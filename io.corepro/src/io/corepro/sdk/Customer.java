@@ -16,6 +16,7 @@
 
 package io.corepro.sdk;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class Customer extends ModelBase {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	private String suffix;
 	private Date birthDate;
 	private String gender;
 	private String culture;
@@ -45,11 +47,17 @@ public class Customer extends ModelBase {
 	private String status;
 	private Date createdDate;
 	private String taxId;
+	private String taxIdMasked;
 	private String driversLicenseNumber;
+	private String driversLicenseNumberMasked;
 	private String driversLicenseState;
-	private Date driversLicenseExpirationDate;
+	private Date driversLicenseExpireDate;
+	private Date driversLicenseIssueDate;
 	private String passportNumber;
+	private String passportNumberMasked;
 	private String passportCountry;
+	private Date passportExpireDate;
+	private Date passportIssueDate;
 	private String emailAddress;
 	private Boolean isActive;
 	private Boolean isLocked;
@@ -63,6 +71,17 @@ public class Customer extends ModelBase {
 	private Date deceasedDate;
 	private ArrayList<Account> accounts;
 	private ArrayList<ExternalAccount> externalAccounts;
+	private String customField1;
+	private String customField2;
+	private String customField3;
+	private String customField4;
+	private String customField5;
+	private Date lastActivityDate;
+	private Date documentsAcceptedDate;
+	private Date expiredDate;
+	private Date manualReviewDate;
+	private Date lastModifiedDate;
+	private ArrayList<Card> cards;
 	
 	public Customer() {
 		super();
@@ -114,7 +133,32 @@ public class Customer extends ModelBase {
 	public Customer getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
 		Envelope<Customer> envelope = new Envelope<Customer>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
-		return Requestor.performGet(String.format("customer/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+        String urlEncodedTag = this.getTag();
+        try {
+            urlEncodedTag = java.net.URLEncoder.encode(urlEncodedTag, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Requestor.performGet(String.format("customer/getByTag/%d/%s",  this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
+	}
+
+
+	public static Customer getByEmail(Integer customerId, String emailAddress, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Customer c = new Customer(customerId);
+		c.setEmailAddress(emailAddress);
+		return c.getByEmail(connection, userDefinedObjectForLogging);
+	}
+
+	public Customer getByEmail(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+		Envelope<Customer> envelope = new Envelope<Customer>();
+		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
+        String urlEncodedEmailAddress = this.getEmailAddress();
+        try {
+            urlEncodedEmailAddress = java.net.URLEncoder.encode(urlEncodedEmailAddress, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Requestor.performGet(String.format("customer/getByEmail/%d/%s",  this.getCustomerId(), urlEncodedEmailAddress), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	
@@ -128,10 +172,8 @@ public class Customer extends ModelBase {
 	
 	
 	
-	
-	
 	public static CustomerResponse initiate(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
-			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpirationDate,
+			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
 			Boolean isDocumentsAccepted, ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
@@ -147,7 +189,7 @@ public class Customer extends ModelBase {
 		c.setTaxId(taxId);
 		c.setDriversLicenseNumber(driversLicenseNumber);
 		c.setDriversLicenseState(driversLicenseState);
-		c.setDriversLicenseExpirationDate(driversLicenseExpirationDate);
+		c.setDriversLicenseExpireDate(driversLicenseExpireDate);
 		c.setPassportNumber(passportNumber);
 		c.setPassportCountry(passportCountry);
 		c.setEmailAddress(emailAddress);
@@ -183,7 +225,7 @@ public class Customer extends ModelBase {
 
 	
 	public static Customer create(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
-			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpirationDate,
+			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
 			Boolean isDocumentsAccepted, ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
@@ -199,7 +241,7 @@ public class Customer extends ModelBase {
 		c.setTaxId(taxId);
 		c.setDriversLicenseNumber(driversLicenseNumber);
 		c.setDriversLicenseState(driversLicenseState);
-		c.setDriversLicenseExpirationDate(driversLicenseExpirationDate);
+		c.setDriversLicenseExpireDate(driversLicenseExpireDate);
 		c.setPassportNumber(passportNumber);
 		c.setPassportCountry(passportCountry);
 		c.setEmailAddress(emailAddress);
@@ -222,7 +264,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public static CustomerIdOnly update(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
-			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpirationDate,
+			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
 			ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
@@ -238,7 +280,7 @@ public class Customer extends ModelBase {
 		c.setTaxId(taxId);
 		c.setDriversLicenseNumber(driversLicenseNumber);
 		c.setDriversLicenseState(driversLicenseState);
-		c.setDriversLicenseExpirationDate(driversLicenseExpirationDate);
+		c.setDriversLicenseExpireDate(driversLicenseExpireDate);
 		c.setPassportNumber(passportNumber);
 		c.setPassportCountry(passportCountry);
 		c.setEmailAddress(emailAddress);
@@ -256,8 +298,19 @@ public class Customer extends ModelBase {
 		return Requestor.performPost("customer/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
-	
-	
+
+	public static CustomerIdOnly archive(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+
+		Customer c = new Customer(customerId);
+		return c.archive(connection, userDefinedObjectForLogging);
+	}
+
+	public CustomerIdOnly archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
+		return Requestor.performPost("customer/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
+	}
+
 	
 	public static CustomerIdOnly deactivate(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		
@@ -268,7 +321,7 @@ public class Customer extends ModelBase {
 	public CustomerIdOnly deactivate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
-		return Requestor.performPost("customer/deactivate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
+		return Requestor.performPost("customer/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	
@@ -409,15 +462,6 @@ public class Customer extends ModelBase {
 		this.driversLicenseState = driversLicenseState;
 	}
 
-	public Date getDriversLicenseExpirationDate() {
-		return driversLicenseExpirationDate;
-	}
-
-	public void setDriversLicenseExpirationDate(
-			Date driversLicenseExpirationDate) {
-		this.driversLicenseExpirationDate = driversLicenseExpirationDate;
-	}
-
 	public String getPassportNumber() {
 		return passportNumber;
 	}
@@ -538,5 +582,157 @@ public class Customer extends ModelBase {
 
 	public void setExternalAccounts(ArrayList<ExternalAccount> externalAccounts) {
 		this.externalAccounts = externalAccounts;
+	}
+
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+
+	public String getTaxIdMasked() {
+		return taxIdMasked;
+	}
+
+	public void setTaxIdMasked(String taxIdMasked) {
+		this.taxIdMasked = taxIdMasked;
+	}
+
+	public String getDriversLicenseNumberMasked() {
+		return driversLicenseNumberMasked;
+	}
+
+	public void setDriversLicenseNumberMasked(String driversLicenseNumberMasked) {
+		this.driversLicenseNumberMasked = driversLicenseNumberMasked;
+	}
+
+	public Date getDriversLicenseExpireDate() {
+		return driversLicenseExpireDate;
+	}
+
+	public void setDriversLicenseExpireDate(Date driversLicenseExpireDate) {
+		this.driversLicenseExpireDate = driversLicenseExpireDate;
+	}
+
+	public Date getDriversLicenseIssueDate() {
+		return driversLicenseIssueDate;
+	}
+
+	public void setDriversLicenseIssueDate(Date driversLicenseIssueDate) {
+		this.driversLicenseIssueDate = driversLicenseIssueDate;
+	}
+
+	public String getPassportNumberMasked() {
+		return passportNumberMasked;
+	}
+
+	public void setPassportNumberMasked(String passportNumberMasked) {
+		this.passportNumberMasked = passportNumberMasked;
+	}
+
+	public Date getPassportExpireDate() {
+		return passportExpireDate;
+	}
+
+	public void setPassportExpireDate(Date passportExpireDate) {
+		this.passportExpireDate = passportExpireDate;
+	}
+
+	public Date getPassportIssueDate() {
+		return passportIssueDate;
+	}
+
+	public void setPassportIssueDate(Date passportIssueDate) {
+		this.passportIssueDate = passportIssueDate;
+	}
+
+	public String getCustomField1() {
+		return customField1;
+	}
+
+	public void setCustomField1(String customField1) {
+		this.customField1 = customField1;
+	}
+
+	public String getCustomField2() {
+		return customField2;
+	}
+
+	public void setCustomField2(String customField2) {
+		this.customField2 = customField2;
+	}
+
+	public String getCustomField3() {
+		return customField3;
+	}
+
+	public void setCustomField3(String customField3) {
+		this.customField3 = customField3;
+	}
+
+	public String getCustomField4() {
+		return customField4;
+	}
+
+	public void setCustomField4(String customField4) {
+		this.customField4 = customField4;
+	}
+
+	public String getCustomField5() {
+		return customField5;
+	}
+
+	public void setCustomField5(String customField5) {
+		this.customField5 = customField5;
+	}
+
+	public Date getLastActivityDate() {
+		return lastActivityDate;
+	}
+
+	public void setLastActivityDate(Date lastActivityDate) {
+		this.lastActivityDate = lastActivityDate;
+	}
+
+	public Date getDocumentsAcceptedDate() {
+		return documentsAcceptedDate;
+	}
+
+	public void setDocumentsAcceptedDate(Date documentsAcceptedDate) {
+		this.documentsAcceptedDate = documentsAcceptedDate;
+	}
+
+	public Date getExpiredDate() {
+		return expiredDate;
+	}
+
+	public void setExpiredDate(Date expiredDate) {
+		this.expiredDate = expiredDate;
+	}
+
+	public Date getManualReviewDate() {
+		return manualReviewDate;
+	}
+
+	public void setManualReviewDate(Date manualReviewDate) {
+		this.manualReviewDate = manualReviewDate;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 }
