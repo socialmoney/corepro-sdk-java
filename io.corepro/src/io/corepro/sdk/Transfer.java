@@ -34,6 +34,8 @@ public class Transfer extends ModelBase {
 	private BigDecimal amount;
 	private String tag;
 	private BigInteger transactionId;
+	private String description;
+	private Boolean isSameDaySettle;
 	
 	public Transfer() {
 		super();
@@ -119,6 +121,21 @@ public class Transfer extends ModelBase {
 	public void setTransactionId(BigInteger transactionId) {
 		this.transactionId = transactionId;
 	}
-	
-	
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getIsSameDaySettle() {
+        return isSameDaySettle;
+    }
+
+    public void setIsSameDaySettle(Boolean sameDaySettle) {
+        isSameDaySettle = sameDaySettle;
+    }
 }
