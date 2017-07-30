@@ -24,6 +24,7 @@ import java.util.Date;
 
 import com.google.gson.reflect.TypeToken;
 
+import io.corepro.sdk.models.AccountAccess;
 import io.corepro.sdk.models.AccountIdOnly;
 import io.corepro.sdk.models.Envelope;
 import io.corepro.sdk.models.ModelBase;
@@ -224,9 +225,43 @@ public class Account extends ModelBase {
 		Requestor.performPost("account/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;
 	}
-	
 
-	public Integer getCustomerId() {
+	public AccountAccess addAccess(Integer targetCustomerId, String accessTypeCode, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+        AccountAccess aa = new AccountAccess();
+        aa.setAccountId(this.accountId);
+        aa.setCustomerId(this.customerId);
+        aa.setTargetCustomerId(targetCustomerId);
+        aa.setAccessTypeCode(accessTypeCode);
+        return aa.addAccess(connection, userDefinedObjectForLogging);
+    }
+
+    public AccountAccess editAccess(Integer targetCustomerId, String accessTypeCode, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+        AccountAccess aa = new AccountAccess();
+        aa.setCustomerId(this.customerId);
+        aa.setAccountId(this.accountId);
+        aa.setTargetCustomerId(targetCustomerId);
+        aa.setAccessTypeCode(accessTypeCode);
+        return aa.editAccess(connection, userDefinedObjectForLogging);
+    }
+
+    public AccountAccess removeAccess(Integer targetCustomerId, String accessTypeCode, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+        AccountAccess aa = new AccountAccess();
+        aa.setCustomerId(this.customerId);
+        aa.setAccountId(this.accountId);
+        aa.setTargetCustomerId(targetCustomerId);
+        aa.setAccessTypeCode(accessTypeCode);
+        return aa.removeAccess(connection, userDefinedObjectForLogging);
+    }
+
+    public ArrayList<AccountAccess> listAccess(Integer targetCustomerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+        AccountAccess aa = new AccountAccess();
+        aa.setCustomerId(this.customerId);
+        aa.setAccountId(this.accountId);
+        aa.setTargetCustomerId(targetCustomerId);
+        return aa.listAccess(connection, userDefinedObjectForLogging);
+    }
+
+    public Integer getCustomerId() {
 		return customerId;
 	}
 
