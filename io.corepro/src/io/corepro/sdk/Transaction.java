@@ -16,6 +16,7 @@
 
 package io.corepro.sdk;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -42,12 +43,18 @@ public class Transaction extends ModelBase {
 	private BigDecimal amount;
 	private Date settledDate;
 	private Date voidedDate;
-	private String nachaDescription;
+	private String description;
 	private String friendlyDescription;
 	private Date availableDate;
 	private String returnCode;
 	private Boolean isCredit;
-	
+	private String feeCode;
+	private String feeDescription;
+	private String institutionName;
+	private String customField1;
+	private BigDecimal runningAccountBalance;
+	private Boolean isSameDaySettle;
+
 	public Transaction() {
 		super();
 	}
@@ -86,7 +93,25 @@ public class Transaction extends ModelBase {
 		
 	}
 
-	public Integer getTransactionCount() {
+    public ArrayList<Transaction> get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+        Envelope<ArrayList<Transaction>> envelope = new Envelope<ArrayList<Transaction>>();
+        Type envelopeType = new TypeToken<Envelope<ArrayList<Transaction>>>(){}.getType();
+        return Requestor.performGet(String.format("transaction/get/%d/%d", this.getCustomerId(), this.getTransactionId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+    }
+
+    public ArrayList<Transaction> getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+        Envelope<ArrayList<Transaction>> envelope = new Envelope<ArrayList<Transaction>>();
+        Type envelopeType = new TypeToken<Envelope<ArrayList<Transaction>>>(){}.getType();
+        String urlEncodedTag = this.getTag();
+        try {
+            urlEncodedTag = java.net.URLEncoder.encode(urlEncodedTag, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Requestor.performGet(String.format("transaction/getbytag/%d/%s", this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
+    }
+
+    public Integer getTransactionCount() {
 		return transactionCount;
 	}
 
@@ -174,12 +199,12 @@ public class Transaction extends ModelBase {
 		this.voidedDate = voidedDate;
 	}
 
-	public String getNachaDescription() {
-		return nachaDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setNachaDescription(String nachaDescription) {
-		this.nachaDescription = nachaDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getFriendlyDescription() {
@@ -213,5 +238,52 @@ public class Transaction extends ModelBase {
 	public void setIsCredit(Boolean isCredit) {
 		this.isCredit = isCredit;
 	}
-	
+
+    public String getFeeCode() {
+        return feeCode;
+    }
+
+    public void setFeeCode(String feeCode) {
+        this.feeCode = feeCode;
+    }
+
+    public String getFeeDescription() {
+        return feeDescription;
+    }
+
+    public void setFeeDescription(String feeDescription) {
+        this.feeDescription = feeDescription;
+    }
+
+    public String getInstitutionName() {
+        return institutionName;
+    }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
+
+    public String getCustomField1() {
+        return customField1;
+    }
+
+    public void setCustomField1(String customField1) {
+        this.customField1 = customField1;
+    }
+
+    public BigDecimal getRunningAccountBalance() {
+        return runningAccountBalance;
+    }
+
+    public void setRunningAccountBalance(BigDecimal runningAccountBalance) {
+        this.runningAccountBalance = runningAccountBalance;
+    }
+
+    public Boolean getIsSameDaySettle() {
+        return isSameDaySettle;
+    }
+
+    public void setIsSameDaySettle(Boolean sameDaySettle) {
+        isSameDaySettle = sameDaySettle;
+    }
 }
