@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk;
 
 import java.lang.reflect.Type;
@@ -98,7 +114,7 @@ public class Customer extends ModelBase {
 	public Customer getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
 		Envelope<Customer> envelope = new Envelope<Customer>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
-		return Requestor.performGet(String.format("customer/getByTag/%d/%d",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+		return Requestor.performGet(String.format("customer/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	

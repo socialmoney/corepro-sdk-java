@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk.utils;
 
 import io.corepro.sdk.Connection;
@@ -83,8 +99,8 @@ public class Requestor {
     	
     	try {
 
-	    	HttpsURLConnection conn = null;
-            if (connectionInfo.getProxyServerName() != null && connectionInfo.getProxyServerName() != ""
+	    	HttpsURLConnection conn;
+            if (connectionInfo.getProxyServerName() != null && !connectionInfo.getProxyServerName().equals("")
                     && connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0){
 	    		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
 	        	conn = (HttpsURLConnection)(new URL(url).openConnection(proxy));
@@ -113,8 +129,8 @@ public class Requestor {
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
 
     	try {
-	    	HttpURLConnection conn = null;
-            if (connectionInfo.getProxyServerName() != null && connectionInfo.getProxyServerName() != ""
+	    	HttpURLConnection conn;
+            if (connectionInfo.getProxyServerName() != null && !connectionInfo.getProxyServerName().equals("")
                     && connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0){
                 Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
 	        	conn = (HttpURLConnection)(new URL(url).openConnection(proxy));
@@ -154,9 +170,9 @@ public class Requestor {
     private static <T> T send(HttpURLConnection conn, Connection connectionInfo, String requestBody, String format, Envelope<T> envelope, Type envelopeType, Object userDefinedObjectForLogging) throws IOException, HttpRequestException, CoreProApiException{
 		// fire off request, wait for status response
 
-    	String responseBody = null;
+    	String responseBody;
 		StringWriter writer = new StringWriter();
-		InputStream response = null;
+		InputStream response;
 		BufferedReader reader = null;
 		try {
 			
@@ -227,16 +243,15 @@ public class Requestor {
 								Method setRequestIdMethod = null;
 								Class<? extends Object> cls = items.get(0).getClass();
 								Method[] methods = cls.getMethods();
-								for(int j=0;j<methods.length;j++){
-									if (methods[j].getName() == "setRequestId"){
-										setRequestIdMethod = methods[j];
+								for(Method m : methods){
+									if (m.getName().equals("setRequestId")){
+										setRequestIdMethod = m;
 										break;
 									}
 								}
-								
+
 								if (setRequestIdMethod != null){
-									for(int i=0;i<items.size();i++){
-										Object item = items.get(i);
+									for(Object item : items){
 										setRequestIdMethod.invoke(item, requestId);
 									}
 								}
@@ -244,10 +259,9 @@ public class Requestor {
 						} else if (data instanceof ModelBase){
 							Class<? extends Object> cls = data.getClass();
 							Method[] methods = cls.getMethods();
-							for(int j=0;j<methods.length;j++){
-								if (methods[j].getName() == "setRequestId"){
-									methods[j].invoke(data, requestId);
-									break;
+							for(Method m : methods){
+								if (m.getName().equals("setRequestId")){
+									m.invoke(data, requestId);
 								}
 							}
 						}

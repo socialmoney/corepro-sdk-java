@@ -1,7 +1,24 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,11 +39,17 @@ public class Account extends ModelBase {
 	private String type;
 	private Date createdDate;
 	private Date closedDate;
+	private BigDecimal closedAmount;
+	private BigInteger closedTransactionId;
+	private String closedReason;
+
 	private BigDecimal availableBalance;
 	private BigDecimal accountBalance;
 	private Boolean isPrimary;
 	private Boolean isCloseable;
 	private String routingNumber;
+	private String routingNumberMasked;
+
 	private BigDecimal targetAmount;
 	private Date targetDate;
 	private String category;
@@ -39,7 +62,37 @@ public class Account extends ModelBase {
 	private Date recurringContributionStartDate;
 	private Date recurringContributionEndDate;
 	private Date recurringContributionNextDate;
-	
+
+	private Integer RegDWithdrawalCount;
+	private Date targetMetDate;
+	private BigDecimal targetMetPercent;
+	private String customField1;
+	private String customField2;
+	private String customField3;
+	private String customField4;
+	private String customField5;
+	private BigDecimal pendingBalance;
+	private Integer primaryCustomerId;
+	private String legalName1;
+	private String legalName2;
+	private String accessTypeCode;
+	private Integer totalCustomers;
+	private Boolean isJointAccount;
+	private Boolean isPrimaryCustomer;
+	private BigDecimal interestApr;
+	private BigDecimal interestApy;
+	private Integer tier;
+	private String tierDescription;
+	private BigDecimal tierMinimumAmount;
+	private BigDecimal tierMaximumAmount;
+	private Date lastModifiedDate;
+	private Date balanceLastModifiedDate;
+	private String externalProgramTag;
+	private Integer cardPriority;
+	private Integer customerPriority;
+
+
+
 	public Account() {
 		super();
 	}
@@ -96,7 +149,7 @@ public class Account extends ModelBase {
 		}
 		Envelope<Account> envelope = new Envelope<Account>();
 		Type envelopeType = new TypeToken<Envelope<Account>>(){}.getType();
-		return Requestor.performGet(String.format("account/getByTag/%d/%d",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+		return Requestor.performGet(String.format("account/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 	public static AccountClose close(Integer customerId, Integer accountId, Integer closeToAccountId, String transactionTag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
@@ -386,4 +439,251 @@ public class Account extends ModelBase {
 		this.recurringContributionNextDate = recurringContributionNextDate;
 	}
 
+	public BigDecimal getClosedAmount() {
+		return closedAmount;
+	}
+
+	public void setClosedAmount(BigDecimal closedAmount) {
+		this.closedAmount = closedAmount;
+	}
+
+	public BigInteger getClosedTransactionId() {
+		return closedTransactionId;
+	}
+
+	public void setClosedTransactionId(BigInteger closedTransactionId) {
+		this.closedTransactionId = closedTransactionId;
+	}
+
+	public String getClosedReason() {
+		return closedReason;
+	}
+
+	public void setClosedReason(String closedReason) {
+		this.closedReason = closedReason;
+	}
+
+	public String getRoutingNumberMasked() {
+		return routingNumberMasked;
+	}
+
+	public void setRoutingNumberMasked(String routingNumberMasked) {
+		this.routingNumberMasked = routingNumberMasked;
+	}
+
+	public Date getTargetMetDate() {
+		return targetMetDate;
+	}
+
+	public void setTargetMetDate(Date targetMetDate) {
+		this.targetMetDate = targetMetDate;
+	}
+
+	public BigDecimal getTargetMetPercent() {
+		return targetMetPercent;
+	}
+
+	public void setTargetMetPercent(BigDecimal targetMetPercent) {
+		this.targetMetPercent = targetMetPercent;
+	}
+
+	public String getCustomField1() {
+		return customField1;
+	}
+
+	public void setCustomField1(String customField1) {
+		this.customField1 = customField1;
+	}
+
+	public String getCustomField2() {
+		return customField2;
+	}
+
+	public void setCustomField2(String customField2) {
+		this.customField2 = customField2;
+	}
+
+	public String getCustomField3() {
+		return customField3;
+	}
+
+	public void setCustomField3(String customField3) {
+		this.customField3 = customField3;
+	}
+
+	public String getCustomField4() {
+		return customField4;
+	}
+
+	public void setCustomField4(String customField4) {
+		this.customField4 = customField4;
+	}
+
+	public String getCustomField5() {
+		return customField5;
+	}
+
+	public void setCustomField5(String customField5) {
+		this.customField5 = customField5;
+	}
+
+	public BigDecimal getPendingBalance() {
+		return pendingBalance;
+	}
+
+	public void setPendingBalance(BigDecimal pendingBalance) {
+		this.pendingBalance = pendingBalance;
+	}
+
+	public Integer getPrimaryCustomerId() {
+		return primaryCustomerId;
+	}
+
+	public void setPrimaryCustomerId(Integer primaryCustomerId) {
+		this.primaryCustomerId = primaryCustomerId;
+	}
+
+	public String getLegalName1() {
+		return legalName1;
+	}
+
+	public void setLegalName1(String legalName1) {
+		this.legalName1 = legalName1;
+	}
+
+	public String getLegalName2() {
+		return legalName2;
+	}
+
+	public void setLegalName2(String legalName2) {
+		this.legalName2 = legalName2;
+	}
+
+	public String getAccessTypeCode() {
+		return accessTypeCode;
+	}
+
+	public void setAccessTypeCode(String accessTypeCode) {
+		this.accessTypeCode = accessTypeCode;
+	}
+
+	public Integer getTotalCustomers() {
+		return totalCustomers;
+	}
+
+	public void setTotalCustomers(Integer totalCustomers) {
+		this.totalCustomers = totalCustomers;
+	}
+
+	public Boolean getIsJointAccount() {
+		return isJointAccount;
+	}
+
+	public void setIsJointAccount(Boolean jointAccount) {
+		isJointAccount = jointAccount;
+	}
+
+	public Boolean getIsPrimaryCustomer() {
+		return isPrimaryCustomer;
+	}
+
+	public void setIsPrimaryCustomer(Boolean primaryCustomer) {
+		isPrimaryCustomer = primaryCustomer;
+	}
+
+	public BigDecimal getInterestApr() {
+		return interestApr;
+	}
+
+	public void setInterestApr(BigDecimal interestApr) {
+		this.interestApr = interestApr;
+	}
+
+	public BigDecimal getInterestApy() {
+		return interestApy;
+	}
+
+	public void setInterestApy(BigDecimal interestApy) {
+		this.interestApy = interestApy;
+	}
+
+	public Integer getTier() {
+		return tier;
+	}
+
+	public void setTier(Integer tier) {
+		this.tier = tier;
+	}
+
+	public String getTierDescription() {
+		return tierDescription;
+	}
+
+	public void setTierDescription(String tierDescription) {
+		this.tierDescription = tierDescription;
+	}
+
+	public BigDecimal getTierMinimumAmount() {
+		return tierMinimumAmount;
+	}
+
+	public void setTierMinimumAmount(BigDecimal tierMinimumAmount) {
+		this.tierMinimumAmount = tierMinimumAmount;
+	}
+
+	public BigDecimal getTierMaximumAmount() {
+		return tierMaximumAmount;
+	}
+
+	public void setTierMaximumAmount(BigDecimal tierMaximumAmount) {
+		this.tierMaximumAmount = tierMaximumAmount;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public Date getBalanceLastModifiedDate() {
+		return balanceLastModifiedDate;
+	}
+
+	public void setBalanceLastModifiedDate(Date balanceLastModifiedDate) {
+		this.balanceLastModifiedDate = balanceLastModifiedDate;
+	}
+
+	public String getExternalProgramTag() {
+		return externalProgramTag;
+	}
+
+	public void setExternalProgramTag(String externalProgramTag) {
+		this.externalProgramTag = externalProgramTag;
+	}
+
+	public Integer getCardPriority() {
+		return cardPriority;
+	}
+
+	public void setCardPriority(Integer cardPriority) {
+		this.cardPriority = cardPriority;
+	}
+
+	public Integer getCustomerPriority() {
+		return customerPriority;
+	}
+
+	public void setCustomerPriority(Integer customerPriority) {
+		this.customerPriority = customerPriority;
+	}
+
+	public Integer getRegDWithdrawalCount() {
+		return RegDWithdrawalCount;
+	}
+
+	public void setRegDWithdrawalCount(Integer regDWithdrawalCount) {
+		RegDWithdrawalCount = regDWithdrawalCount;
+	}
 }

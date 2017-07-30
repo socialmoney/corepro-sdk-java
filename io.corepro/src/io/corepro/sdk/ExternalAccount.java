@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk;
 
 import java.lang.reflect.Type;
@@ -91,8 +107,7 @@ public class ExternalAccount extends ModelBase {
 	public ExternalAccount get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
 		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
-		ExternalAccount account = Requestor.performGet(String.format("externalaccount/get/%d/%d",  this.getCustomerId(), this.getExternalAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
-		return account;
+		return Requestor.performGet(String.format("externalaccount/get/%d/%d",  this.getCustomerId(), this.getExternalAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	public static ExternalAccount getByTag(Integer customerId, String tag, Connection connection, Object userDefinedObjectForLogging) throws Exception{
@@ -102,8 +117,7 @@ public class ExternalAccount extends ModelBase {
 	public ExternalAccount getByTag(Connection connection, Object userDefinedObjectForLogging) throws Exception {
 		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
-		ExternalAccount account = Requestor.performGet(String.format("externalaccount/getByTag/%d/%d",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
-		return account;
+		return Requestor.performGet(String.format("externalaccount/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 

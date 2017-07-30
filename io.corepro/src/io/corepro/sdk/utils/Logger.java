@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk.utils;
 
 import java.io.IOException;
@@ -27,7 +43,7 @@ public class Logger {
 	}
 	
 	public static boolean isLogEnabled(){
-		return (__logFilePath != null && __logFilePath != "") || __registeredLogWriter != null;
+		return (__logFilePath != null && !__logFilePath.equals("")) || __registeredLogWriter != null;
 	}
 	
 	static {
@@ -55,7 +71,7 @@ public class Logger {
 		
 		if (isLogEnabled()){
 			try {
-				writeToLogFile(timestamp, threadId, exception.getMessage() + ". " + additionalInfo + ". " + exception.getStackTrace(), userDefinedObjectForLogging);
+				writeToLogFile(timestamp, threadId, exception.getMessage() + ". " + additionalInfo + ". " + exception.getStackTrace()[0].toString(), userDefinedObjectForLogging);
 			} catch (IOException ioe) {
 				// eat errors??
 			}
@@ -90,12 +106,8 @@ public class Logger {
 		long threadId = Thread.currentThread().getId();
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append(urlConnection.getURL().toString() + "\n");
-		
-		sb.append(body);
-		
-		String output = sb.toString();
-		
+		String output = urlConnection.getURL().toString() + "\n" + body;
+
 		if (__registeredLogWriter != null){
 			try {
 				__registeredLogWriter.write(timestamp, threadId, urlConnection, output, userDefinedObjectForLogging);
@@ -116,15 +128,14 @@ public class Logger {
 	
 	private static void writeToLogFile(Date timestamp, long threadId, String body, Object userDefinedObjectForLogging) throws IOException{
 		String logFilePath = Logger.getLogFilePath();
-		if (logFilePath != null && logFilePath != ""){
+		if (logFilePath != null && !logFilePath.equals("")){
 			Path path = FileSystems.getDefault().getPath(logFilePath);
 			if (Files.notExists(path)){
 				Files.createFile(path);
 			}
 			
-			StringBuilder sb = new StringBuilder();
-			sb.append("#|" + timestamp + "|" + threadId + "|" + body + "|" + userDefinedObjectForLogging + "\n");
-			byte[] bytes = sb.toString().getBytes("UTF-8");
+			String output = "#|" + timestamp + "|" + threadId + "|" + body + "|" + userDefinedObjectForLogging + "\n";
+			byte[] bytes = output.getBytes("UTF-8");
 			Files.write(path, bytes, StandardOpenOption.APPEND);
 		}
 	}

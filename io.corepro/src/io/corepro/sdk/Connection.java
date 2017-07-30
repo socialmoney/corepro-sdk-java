@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2017 Q2 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.corepro.sdk;
 
 import java.io.UnsupportedEncodingException;
@@ -52,13 +68,13 @@ public class Connection {
 		
 		c.setProxyServerName(Util.readProperty("CoreProProxyServerName"));
 		try {
-			Integer val = Integer.parseInt(Util.readProperty("CoreProProxyPort"));
+			Integer val = Integer.parseInt(Util.readProperty("CoreProProxyPort") + "");
 			c.setProxyPort(val);
 		} catch (Exception ex){
 			// eat any integer parsing errors here
 		}
 		
-		if (c.getDomainName() == null || c.getDomainName() == ""){
+		if (c.getDomainName() == null || c.getDomainName().equals("")){
 			c.setDomainName("api.corepro.io");
 		}
 		
@@ -70,7 +86,7 @@ public class Connection {
         // given "https://domainname.tld" or "http://domainname.tld/page123" or "//domainname.tld/mypagehere?page=1" or "domainname.tld", return just "domainname.tld"
 		
 		String rv = value;
-		if (rv != null && rv != ""){
+		if (rv != null && !rv.equals("")){
 			rv = rv.replace("https://",  "").replace("http://", "").replace("//",  "").split("/")[0];
 		}
 		
@@ -105,7 +121,7 @@ public class Connection {
 	public String getHeaderValue() throws UnsupportedEncodingException, NullPointerException {
 		if (headerValue == null){
 			try {
-                if (getApiKey() == null || getApiKey() == "" || getApiSecret() == null || getApiSecret() == "") {
+                if (getApiKey() == null || getApiKey().equals("") || getApiSecret() == null || getApiSecret().equals("")) {
                     throw new NullPointerException("Both apiKey and apiSecret must be specified when making a CorePro request");
                 }
 
