@@ -16,6 +16,7 @@
 
 package io.corepro.sdk;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,10 +48,18 @@ public class ExternalAccount extends ModelBase {
 	private String accountNumberMasked;
 	private String nocCode;
 	private Boolean isActive;
+	private Boolean isLocked;
 	private Date lockedDate;
 	private String lockedReason;
-	
-	
+	private String customField1;
+	private String customField2;
+	private String customField3;
+	private String customField4;
+	private String customField5;
+
+	private Date lastVerifySentDate;
+	private Date lastVerifyExpiredDate;
+	private Date lastModifiedDate;
 	
 	public ExternalAccount() {
 		super();
@@ -72,22 +81,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public static ArrayList<ExternalAccount> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws Exception{
 		return new ExternalAccount(customerId).list(connection,  userDefinedObjectForLogging);
 	}
@@ -117,7 +111,13 @@ public class ExternalAccount extends ModelBase {
 	public ExternalAccount getByTag(Connection connection, Object userDefinedObjectForLogging) throws Exception {
 		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
-		return Requestor.performGet(String.format("externalaccount/getByTag/%d/%s",  this.getCustomerId(), this.getTag()), connection, envelope, envelopeType, userDefinedObjectForLogging);
+		String urlEncodedTag = this.getTag();
+		try {
+			urlEncodedTag = java.net.URLEncoder.encode(urlEncodedTag, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return Requestor.performGet(String.format("externalaccount/getByTag/%d/%s",  this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 
@@ -208,16 +208,16 @@ public class ExternalAccount extends ModelBase {
 	
 	
 	
-	public static Boolean deactivate(Integer customerId, Integer externalAccountId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static Boolean archive(Integer customerId, Integer externalAccountId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		
 		ExternalAccount ea = new ExternalAccount(customerId, externalAccountId);
-		return ea.deactivate(connection, userDefinedObjectForLogging);
+		return ea.archive(connection, userDefinedObjectForLogging);
 	}
 	
-	public Boolean deactivate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public Boolean archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<Object> envelope = new Envelope<Object>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
-		Requestor.performPost("externalaccount/deactivate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
+		Requestor.performPost("externalaccount/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;
 	}
 
@@ -377,6 +377,77 @@ public class ExternalAccount extends ModelBase {
 	public void setLockedReason(String lockedReason) {
 		this.lockedReason = lockedReason;
 	}
-	
-	
+
+
+	public Boolean getIsLocked() {
+		return isLocked;
+	}
+
+	public void setIsLocked(Boolean locked) {
+		isLocked = locked;
+	}
+
+	public String getCustomField1() {
+		return customField1;
+	}
+
+	public void setCustomField1(String customField1) {
+		this.customField1 = customField1;
+	}
+
+	public String getCustomField2() {
+		return customField2;
+	}
+
+	public void setCustomField2(String customField2) {
+		this.customField2 = customField2;
+	}
+
+	public String getCustomField3() {
+		return customField3;
+	}
+
+	public void setCustomField3(String customField3) {
+		this.customField3 = customField3;
+	}
+
+	public String getCustomField4() {
+		return customField4;
+	}
+
+	public void setCustomField4(String customField4) {
+		this.customField4 = customField4;
+	}
+
+	public String getCustomField5() {
+		return customField5;
+	}
+
+	public void setCustomField5(String customField5) {
+		this.customField5 = customField5;
+	}
+
+	public Date getLastVerifySentDate() {
+		return lastVerifySentDate;
+	}
+
+	public void setLastVerifySentDate(Date lastVerifySentDate) {
+		this.lastVerifySentDate = lastVerifySentDate;
+	}
+
+	public Date getLastVerifyExpiredDate() {
+		return lastVerifyExpiredDate;
+	}
+
+	public void setLastVerifyExpiredDate(Date lastVerifyExpiredDate) {
+		this.lastVerifyExpiredDate = lastVerifyExpiredDate;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 }

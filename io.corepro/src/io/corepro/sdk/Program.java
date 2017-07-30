@@ -18,6 +18,7 @@ package io.corepro.sdk;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,13 +60,17 @@ public class Program extends ModelBase {
     private Map<String, ProgramECode> eCodeProducts;
     private Map<String, ProgramPrepaid> prepaidProducts;
     private Map<String, ProgramSavings> savingsProducts;
+	private ArrayList<Account> accounts;
+	private ArrayList<ExternalAccount> externalAccounts;
 
 	public Program() {
 		super();
         checkingProducts = new HashMap<String, ProgramChecking>();
-        eCodeProducts = new HashMap<String, ProgramECode>();
+        seteCodeProducts(new HashMap<String, ProgramECode>());
         prepaidProducts = new HashMap<String, ProgramPrepaid>();
         savingsProducts = new HashMap<String, ProgramSavings>();
+        setAccounts(new ArrayList<Account>());
+		setExternalAccounts(new ArrayList<ExternalAccount>());
 	}
 	
 	public static Program get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
@@ -209,11 +214,11 @@ public class Program extends ModelBase {
     }
 
     public Map<String, ProgramECode> getECodeProducts() {
-        return eCodeProducts;
+        return geteCodeProducts();
     }
 
     public void setECodeProducts(Map<String, ProgramECode> eCodeProducts) {
-        this.eCodeProducts = eCodeProducts;
+        this.seteCodeProducts(eCodeProducts);
     }
 
     public Map<String, ProgramPrepaid> getPrepaidProducts() {
@@ -231,4 +236,28 @@ public class Program extends ModelBase {
     public void setSavingsProducts(Map<String, ProgramSavings> savingsProducts) {
         this.savingsProducts = savingsProducts;
     }
+
+	public Map<String, ProgramECode> geteCodeProducts() {
+		return eCodeProducts;
+	}
+
+	public void seteCodeProducts(Map<String, ProgramECode> eCodeProducts) {
+		this.eCodeProducts = eCodeProducts;
+	}
+
+	public ArrayList<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(ArrayList<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public ArrayList<ExternalAccount> getExternalAccounts() {
+		return externalAccounts;
+	}
+
+	public void setExternalAccounts(ArrayList<ExternalAccount> externalAccounts) {
+		this.externalAccounts = externalAccounts;
+	}
 }
