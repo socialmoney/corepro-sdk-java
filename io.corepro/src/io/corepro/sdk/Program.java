@@ -18,10 +18,7 @@ package io.corepro.sdk;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -60,21 +57,21 @@ public class Program extends ModelBase {
     private Map<String, ProgramECode> eCodeProducts;
     private Map<String, ProgramPrepaid> prepaidProducts;
     private Map<String, ProgramSavings> savingsProducts;
-	private ArrayList<Account> accounts;
-	private ArrayList<ExternalAccount> externalAccounts;
+	private List<Account> accounts;
+	private List<ExternalAccount> externalAccounts;
 
 	public Program() {
 		super();
-        checkingProducts = new HashMap<String, ProgramChecking>();
-        seteCodeProducts(new HashMap<String, ProgramECode>());
-        prepaidProducts = new HashMap<String, ProgramPrepaid>();
-        savingsProducts = new HashMap<String, ProgramSavings>();
-        setAccounts(new ArrayList<Account>());
-		setExternalAccounts(new ArrayList<ExternalAccount>());
+        checkingProducts = new HashMap<>();
+        seteCodeProducts(new HashMap<>());
+        prepaidProducts = new HashMap<>();
+        savingsProducts = new HashMap<>();
+        setAccounts(new ArrayList<>());
+		setExternalAccounts(new ArrayList<>());
 	}
 	
 	public static Program get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Program> envelope = new Envelope<Program>();
+		Envelope<Program> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Program>>(){}.getType();
 		return Requestor.performGet("program/get", connection, envelope, envelopeType, userDefinedObjectForLogging);
 		
@@ -245,19 +242,19 @@ public class Program extends ModelBase {
 		this.eCodeProducts = eCodeProducts;
 	}
 
-	public ArrayList<Account> getAccounts() {
+	public List<Account> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(ArrayList<Account> accounts) {
+	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
 
-	public ArrayList<ExternalAccount> getExternalAccounts() {
+	public List<ExternalAccount> getExternalAccounts() {
 		return externalAccounts;
 	}
 
-	public void setExternalAccounts(ArrayList<ExternalAccount> externalAccounts) {
+	public void setExternalAccounts(List<ExternalAccount> externalAccounts) {
 		this.externalAccounts = externalAccounts;
 	}
 }

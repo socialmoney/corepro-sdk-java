@@ -17,18 +17,19 @@
 package io.corepro.sdk.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerQuestion {
-	private ArrayList<String> answers;
+	private List<String> answers;
 	private String prompt;
 	private String type;
 	public CustomerQuestion() {
-		this.setAnswers(new ArrayList<String>());
+		this.setAnswers(new ArrayList<>());
 	}
-	public ArrayList<String> getAnswers() {
+	public List<String> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(ArrayList<String> answers) {
+	public void setAnswers(List<String> answers) {
 		this.answers = answers;
 	}
 	public String getPrompt() {

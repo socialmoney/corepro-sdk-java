@@ -54,7 +54,7 @@ public class ExternalAccountDocument extends ModelBase {
     }
     
     public void upload(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
     	
 		Requestor.performPost("externalaccountdocument/upload", connection, this, envelope, envelopeType, userDefinedObjectForLogging);

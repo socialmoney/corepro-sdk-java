@@ -31,19 +31,19 @@ public class CardAccountLink extends ModelBase {
     private Integer priority;
 
     public Card add(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/addAccount", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card remove(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/removeAccount", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card reprioritize(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/reprioritizeAccount", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }

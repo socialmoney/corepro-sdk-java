@@ -19,6 +19,7 @@ package io.corepro.sdk;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -39,15 +40,15 @@ public class BankDocument extends ModelBase {
 	public Date effectiveDate;
 	public Date expireDate;
 	
-	public static ArrayList<BankDocument> list(String cultureName, String documentType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<ArrayList<BankDocument>> envelope = new Envelope<ArrayList<BankDocument>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<BankDocument>>>(){}.getType();
+	public static List<BankDocument> list(String cultureName, String documentType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+		Envelope<List<BankDocument>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<BankDocument>>>(){}.getType();
 		
 		return Requestor.performGet(String.format("bankdocument/list/%s/%s",  cultureName, documentType), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 	public static FileContent download(String cultureName, Integer documentId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<FileContent> envelope = new Envelope<FileContent>();
+		Envelope<FileContent> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<FileContent>>(){}.getType();
 		
 		return Requestor.performGet(String.format("bankdocument/download/%s/%d",  cultureName, documentId), connection, envelope, envelopeType, userDefinedObjectForLogging);

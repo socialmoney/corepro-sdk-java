@@ -53,7 +53,7 @@ public final class DateTypeAdapter extends TypeAdapter<Date> {
   private final DateFormat iso8601Format = buildIso8601Format();
 
   private static DateFormat buildIso8601Format() {
-    DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+    DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
     iso8601Format.setTimeZone(TimeZone.getTimeZone("UTC"));
     return iso8601Format;
   }

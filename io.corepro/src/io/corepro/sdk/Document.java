@@ -19,6 +19,7 @@ package io.corepro.sdk;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -39,10 +40,10 @@ public class Document extends ModelBase {
 	public Date effectiveDate;
 	public Date expireDate;
 	
-	public static ArrayList<Document> list(String cultureName, String documentType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<ArrayList<Document>> envelope = new Envelope<ArrayList<Document>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Document>>>(){}.getType();
+	public static List<Document> list(String cultureName, String documentType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+		Envelope<List<Document>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Document>>>(){}.getType();
 		
-		return Requestor.performGet(String.format("document/list/%d/%s",  cultureName, documentType), connection, envelope, envelopeType, userDefinedObjectForLogging);
+		return Requestor.performGet(String.format("document/list/%s/%s",  cultureName, documentType), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 }

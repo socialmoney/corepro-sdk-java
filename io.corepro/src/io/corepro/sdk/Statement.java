@@ -18,6 +18,7 @@ package io.corepro.sdk;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -44,14 +45,14 @@ public class Statement extends ModelBase {
 	}
 	
 	
-	public static ArrayList<Statement> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static List<Statement> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Statement s = new Statement(customerId, null);
 		return s.list(connection, userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Statement> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ArrayList<Statement>> envelope = new Envelope<ArrayList<Statement>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Statement>>>(){}.getType();
+	public List<Statement> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<List<Statement>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Statement>>>(){}.getType();
 		return Requestor.performGet(String.format("statement/list/%d", this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 		
 	}
@@ -62,7 +63,7 @@ public class Statement extends ModelBase {
 	}
 	
 	public Statement get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Statement> envelope = new Envelope<Statement>();
+		Envelope<Statement> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Statement>>(){}.getType();
 		return Requestor.performGet(String.format("statement/get/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 		
@@ -74,7 +75,7 @@ public class Statement extends ModelBase {
 	}
 	
 	public FileContent download(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<FileContent> envelope = new Envelope<FileContent>();
+		Envelope<FileContent> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<FileContent>>(){}.getType();
 		return Requestor.performGet(String.format("statement/download/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 		

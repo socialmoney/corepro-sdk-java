@@ -17,12 +17,13 @@
 package io.corepro.sdk.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProgramChecking {
     private String category;
     private String type;
     private ProgramLimit balanceLimit;
-    private ArrayList<ProgramInterestRate> interestRates;
+    private List<ProgramInterestRate> interestRates;
     private Boolean isExternalWithdrawEnabled;
     private Boolean isInterestEnabled;
     private Boolean isRecurringContributionEnabled;
@@ -32,7 +33,7 @@ public class ProgramChecking {
     public ProgramChecking() {
         super();
         balanceLimit = new ProgramLimit();
-        interestRates = new ArrayList<ProgramInterestRate>();
+        interestRates = new ArrayList<>();
         perTransactionDepositLimit = new ProgramLimit();
         perTransactionWithdrawLimit  = new ProgramLimit();
     }
@@ -61,11 +62,11 @@ public class ProgramChecking {
         this.balanceLimit = balanceLimit;
     }
 
-    public ArrayList<ProgramInterestRate> getInterestRates() {
+    public List<ProgramInterestRate> getInterestRates() {
         return interestRates;
     }
 
-    public void setInterestRates(ArrayList<ProgramInterestRate> interestRates) {
+    public void setInterestRates(List<ProgramInterestRate> interestRates) {
         this.interestRates = interestRates;
     }
 

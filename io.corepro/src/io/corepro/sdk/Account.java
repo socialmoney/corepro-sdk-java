@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -118,13 +119,13 @@ public class Account extends ModelBase {
 		return "Id: " + this.getAccountId() + ", Name:" + this.getName() + ", #:" + this.getAccountNumberMasked() + ", avail:" + this.getAvailableBalance();
 	}
 	
-	public static ArrayList<Account> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws Exception{
+	public static List<Account> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws Exception{
 		return new Account(customerId).list(connection,  userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Account> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		Envelope<ArrayList<Account>> envelope = new Envelope<ArrayList<Account>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Account>>>(){}.getType();
+	public List<Account> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+		Envelope<List<Account>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Account>>>(){}.getType();
 		
 		return Requestor.performGet(String.format("account/list/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -135,7 +136,7 @@ public class Account extends ModelBase {
 	}
 	
 	public Account get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		Envelope<Account> envelope = new Envelope<Account>();
+		Envelope<Account> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Account>>(){}.getType();
 		return Requestor.performGet(String.format("account/get/%d/%d",  this.getCustomerId(), this.getAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -148,7 +149,7 @@ public class Account extends ModelBase {
 		if (connection == null){
 			connection = Connection.createFromConfig(null,  null,  null);
 		}
-		Envelope<Account> envelope = new Envelope<Account>();
+		Envelope<Account> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Account>>(){}.getType();
         String urlEncodedTag = java.net.URLEncoder.encode(this.getTag(), "UTF-8");
         return Requestor.performGet(String.format("account/getByTag/%d/%s",  this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
@@ -189,7 +190,7 @@ public class Account extends ModelBase {
 	}
 	
 	public Integer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<AccountIdOnly> envelope = new Envelope<AccountIdOnly>();
+		Envelope<AccountIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<AccountIdOnly>>(){}.getType();
 		AccountIdOnly accountIdOnly = Requestor.performPost("account/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return accountIdOnly.getAccountId();
@@ -221,7 +222,7 @@ public class Account extends ModelBase {
 	}
 	
 	public Boolean update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Object> envelope = new Envelope<Object>();
+		Envelope<Object> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		Requestor.performPost("account/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;
@@ -254,7 +255,7 @@ public class Account extends ModelBase {
         return aa.removeAccess(connection, userDefinedObjectForLogging);
     }
 
-    public ArrayList<AccountAccess> listAccess(Integer targetCustomerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+    public List<AccountAccess> listAccess(Integer targetCustomerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
         AccountAccess aa = new AccountAccess();
         aa.setCustomerId(this.customerId);
         aa.setAccountId(this.accountId);

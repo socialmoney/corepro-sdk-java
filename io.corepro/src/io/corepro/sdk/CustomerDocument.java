@@ -19,6 +19,7 @@ package io.corepro.sdk;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -63,25 +64,25 @@ public class CustomerDocument extends ModelBase {
     }
     
     public CustomerDocument upload(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerDocument> envelope = new Envelope<CustomerDocument>();
+		Envelope<CustomerDocument> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerDocument>>(){}.getType();
 		return Requestor.performPost("customerdocument/upload", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
-	public ArrayList<CustomerDocument> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<ArrayList<CustomerDocument>> envelope = new Envelope<ArrayList<CustomerDocument>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<CustomerDocument>>>() {}.getType();
+	public List<CustomerDocument> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+		Envelope<List<CustomerDocument>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<CustomerDocument>>>() {}.getType();
 		return Requestor.performGet(String.format("customerdocument/list/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	public CustomerDocument get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<CustomerDocument> envelope = new Envelope<CustomerDocument>();
+		Envelope<CustomerDocument> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerDocument>>() {}.getType();
 		return Requestor.performGet(String.format("customerdocument/get/%d/%d",  this.getCustomerId(), this.documentId), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	public CustomerDocument getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<CustomerDocument> envelope = new Envelope<CustomerDocument>();
+		Envelope<CustomerDocument> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerDocument>>() {}.getType();
 		String urlEncodedTag = this.getTag();
 		try {
@@ -93,7 +94,7 @@ public class CustomerDocument extends ModelBase {
 	}
 
 	public FileContent download(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<FileContent> envelope = new Envelope<FileContent>();
+		Envelope<FileContent> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<FileContent>>() {}.getType();
 		return Requestor.performGet(String.format("customerdocument/download/%d/%d",  this.getCustomerId(), this.documentId), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}

@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -82,13 +83,13 @@ public class ExternalAccount extends ModelBase {
 	
 	
 
-	public static ArrayList<ExternalAccount> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws Exception{
+	public static List<ExternalAccount> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws Exception{
 		return new ExternalAccount(customerId).list(connection,  userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<ExternalAccount> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		Envelope<ArrayList<ExternalAccount>> envelope = new Envelope<ArrayList<ExternalAccount>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<ExternalAccount>>>(){}.getType();
+	public List<ExternalAccount> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+		Envelope<List<ExternalAccount>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<ExternalAccount>>>(){}.getType();
 		
 		return Requestor.performGet(String.format("externalaccount/list/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -99,7 +100,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public ExternalAccount get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
+		Envelope<ExternalAccount> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		return Requestor.performGet(String.format("externalaccount/get/%d/%d",  this.getCustomerId(), this.getExternalAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -109,7 +110,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public ExternalAccount getByTag(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-		Envelope<ExternalAccount> envelope = new Envelope<ExternalAccount>();
+		Envelope<ExternalAccount> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		String urlEncodedTag = this.getTag();
 		try {
@@ -140,7 +141,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Integer initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
+		Envelope<ExternalAccountIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		ExternalAccountIdOnly accountIdOnly = Requestor.performPost("externalaccount/initiate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return accountIdOnly.getExternalAccountId();
@@ -152,7 +153,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean verify(BigDecimal amount1, BigDecimal amount2, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Object> envelope = new Envelope<Object>();
+		Envelope<Object> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		
 		ExternalAccountVerify eav = new ExternalAccountVerify(this.getCustomerId(), this.getExternalAccountId(), amount1, amount2);
@@ -182,7 +183,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Integer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
+		Envelope<ExternalAccountIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		ExternalAccountIdOnly accountIdOnly = Requestor.performPost("externalaccount/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return accountIdOnly.getExternalAccountId();
@@ -199,7 +200,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ExternalAccountIdOnly> envelope = new Envelope<ExternalAccountIdOnly>();
+		Envelope<ExternalAccountIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<ExternalAccountIdOnly>>(){}.getType();
 		Requestor.performPost("externalaccount/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;
@@ -215,7 +216,7 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Object> envelope = new Envelope<Object>();
+		Envelope<Object> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
 		Requestor.performPost("externalaccount/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;

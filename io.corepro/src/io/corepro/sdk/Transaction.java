@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -63,12 +64,12 @@ public class Transaction extends ModelBase {
 		this();
 	}
 	
-	public static ArrayList<Transaction> list(Integer customerId, Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static List<Transaction> list(Integer customerId, Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Transaction t = new Transaction(customerId);
 		return t.list(accountId, status, beginDate, endDate, pageNumber, pageSize, connection, userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Transaction> list(Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public List<Transaction> list(Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String begin = "";
@@ -87,21 +88,21 @@ public class Transaction extends ModelBase {
 			begin = "1900-01-01";
 		}
 
-		Envelope<ArrayList<Transaction>> envelope = new Envelope<ArrayList<Transaction>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Transaction>>>(){}.getType();
+		Envelope<List<Transaction>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Transaction>>>(){}.getType();
 		return Requestor.performGet(String.format("transaction/list/%d/%d/%s/%s/%s?pageNumber=%d&pageSize=%d", this.getCustomerId(), accountId, status, begin, end, pageNumber, pageSize), connection, envelope, envelopeType, userDefinedObjectForLogging);
 		
 	}
 
-    public ArrayList<Transaction> get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<ArrayList<Transaction>> envelope = new Envelope<ArrayList<Transaction>>();
-        Type envelopeType = new TypeToken<Envelope<ArrayList<Transaction>>>(){}.getType();
+    public List<Transaction> get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+        Envelope<List<Transaction>> envelope = new Envelope<>();
+        Type envelopeType = new TypeToken<Envelope<List<Transaction>>>(){}.getType();
         return Requestor.performGet(String.format("transaction/get/%d/%d", this.getCustomerId(), this.getTransactionId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
-    public ArrayList<Transaction> getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<ArrayList<Transaction>> envelope = new Envelope<ArrayList<Transaction>>();
-        Type envelopeType = new TypeToken<Envelope<ArrayList<Transaction>>>(){}.getType();
+    public List<Transaction> getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+        Envelope<List<Transaction>> envelope = new Envelope<>();
+        Type envelopeType = new TypeToken<Envelope<List<Transaction>>>(){}.getType();
         String urlEncodedTag = this.getTag();
         try {
             urlEncodedTag = java.net.URLEncoder.encode(urlEncodedTag, "UTF-8");

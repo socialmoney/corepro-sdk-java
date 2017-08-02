@@ -17,14 +17,15 @@
 package io.corepro.sdk.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerVerifyRequest extends ModelBase {
 	private Integer customerId;
 	private String verificationId;
-	private ArrayList<CustomerAnswer> answers;
+	private List<CustomerAnswer> answers;
 	
 	public CustomerVerifyRequest(){
-		this.setAnswers(new ArrayList<CustomerAnswer>());
+		this.setAnswers(new ArrayList<>());
 	}
 
 	public Integer getCustomerId() {
@@ -43,11 +44,11 @@ public class CustomerVerifyRequest extends ModelBase {
 		this.verificationId = verificationId;
 	}
 
-	public ArrayList<CustomerAnswer> getAnswers() {
+	public List<CustomerAnswer> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(ArrayList<CustomerAnswer> answers) {
+	public void setAnswers(List<CustomerAnswer> answers) {
 		this.answers = answers;
 	}
 }

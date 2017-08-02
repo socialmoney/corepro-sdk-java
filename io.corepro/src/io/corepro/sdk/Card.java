@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Card extends ModelBase {
 
@@ -56,24 +57,24 @@ public class Card extends ModelBase {
     private Date expiredDate;
     private Date archivedDate;
     private String newPin;
-    private ArrayList<Account> accounts;
+    private List<Account> accounts;
     private Date lastModifiedDate;
     private String reissueReasonTypeCode;
 
-    public ArrayList<Card> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<ArrayList<Card>> envelope = new Envelope<ArrayList<Card>>();
-        Type envelopeType = new TypeToken<Envelope<ArrayList<Card>>>(){}.getType();
+    public List<Card> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+        Envelope<List<Card>> envelope = new Envelope<>();
+        Type envelopeType = new TypeToken<Envelope<List<Card>>>(){}.getType();
         return Requestor.performGet(String.format("card/list/%d",  this.customerId), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performGet(String.format("card/get/%d/%d",  this.customerId, this.cardId), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         String urlEncodedTag = this.getTag();
         try {
@@ -85,55 +86,55 @@ public class Card extends ModelBase {
     }
 
     public Card initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/initiate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card verify(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/verify", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card resetPin(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/resetpin", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card reissue(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/reissue", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card lock(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/lock", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card unlock(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/unlock", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card hotlist(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/hotlist", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Card archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<Card> envelope = new Envelope<Card>();
+        Envelope<Card> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Card>>(){}.getType();
         return Requestor.performPost("card/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
@@ -372,11 +373,11 @@ public class Card extends ModelBase {
         this.newPin = newPin;
     }
 
-    public ArrayList<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(ArrayList<Account> accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 

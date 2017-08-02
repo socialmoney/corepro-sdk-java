@@ -56,7 +56,7 @@ public class AccountClose extends ModelBase {
 	}
 	
 	public AccountClose close(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<AccountClose> envelope = new Envelope<AccountClose>();
+		Envelope<AccountClose> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<AccountClose>>(){}.getType();
 		return Requestor.performPost("account/close", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}

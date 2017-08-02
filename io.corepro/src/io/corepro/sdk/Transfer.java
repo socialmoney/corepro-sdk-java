@@ -20,6 +20,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -50,27 +51,27 @@ public class Transfer extends ModelBase {
 		this.setTag(tag);
 	}
 	
-	public static ArrayList<Transfer> create(Integer customerId, Integer fromId, Integer toId, BigDecimal amount, String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static List<Transfer> create(Integer customerId, Integer fromId, Integer toId, BigDecimal amount, String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Transfer t = new Transfer(customerId, fromId, toId, amount, tag);
 		return t.create(connection, userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Transfer> create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ArrayList<Transfer>> envelope = new Envelope<ArrayList<Transfer>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Transfer>>>(){}.getType();
+	public List<Transfer> create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<List<Transfer>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Transfer>>>(){}.getType();
 		return Requestor.performPost("transfer/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 	
 	
-	public static ArrayList<Transfer> voidTransaction(Integer customerId, BigInteger transactionId, String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static List<Transfer> voidTransaction(Integer customerId, BigInteger transactionId, String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Transfer t = new Transfer(customerId, null, null, null, tag);
 		t.setTransactionId(transactionId);
 		return t.voidTransaction(connection, userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Transfer> voidTransaction(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ArrayList<Transfer>> envelope = new Envelope<ArrayList<Transfer>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Transfer>>>(){}.getType();
+	public List<Transfer> voidTransaction(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<List<Transfer>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Transfer>>>(){}.getType();
 		return Requestor.performPost("transfer/void", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 

@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -66,11 +67,11 @@ public class Customer extends ModelBase {
 	private Boolean isSubjectToBackupWithholding;
 	private Boolean isOptedInToBankCommunication;
 	private Boolean isDocumentsAccepted;
-	private ArrayList<CustomerPhone> phones;
-	private ArrayList<CustomerAddress> addresses;
+	private List<CustomerPhone> phones;
+	private List<CustomerAddress> addresses;
 	private Date deceasedDate;
-	private ArrayList<Account> accounts;
-	private ArrayList<ExternalAccount> externalAccounts;
+	private List<Account> accounts;
+	private List<ExternalAccount> externalAccounts;
 	private String customField1;
 	private String customField2;
 	private String customField3;
@@ -81,7 +82,7 @@ public class Customer extends ModelBase {
 	private Date expiredDate;
 	private Date manualReviewDate;
 	private Date lastModifiedDate;
-	private ArrayList<Card> cards;
+	private List<Card> cards;
 	
 	public Customer() {
 		super();
@@ -102,13 +103,13 @@ public class Customer extends ModelBase {
 	}
 	
 	
-	public static ArrayList<Customer> listAll(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+	public static List<Customer> listAll(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		return new Customer(0).list(pageNumber, pageSize, connection, userDefinedObjectForLogging);
 	}
 	
-	public ArrayList<Customer> list(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ArrayList<Customer>> envelope = new Envelope<ArrayList<Customer>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Customer>>>(){}.getType();
+	public List<Customer> list(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<List<Customer>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Customer>>>(){}.getType();
 		
 		return Requestor.performGet(String.format("customer/list?pageNumber=%d&pageSize=%d",  pageNumber, pageSize), connection, envelope, envelopeType, userDefinedObjectForLogging);
 
@@ -121,7 +122,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<Customer> envelope = new Envelope<Customer>();
+		Envelope<Customer> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
 		return Requestor.performGet(String.format("customer/get/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -131,7 +132,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<Customer> envelope = new Envelope<Customer>();
+		Envelope<Customer> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
         String urlEncodedTag = this.getTag();
         try {
@@ -150,7 +151,7 @@ public class Customer extends ModelBase {
 	}
 
 	public Customer getByEmail(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-		Envelope<Customer> envelope = new Envelope<Customer>();
+		Envelope<Customer> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Customer>>(){}.getType();
         String urlEncodedEmailAddress = this.getEmailAddress();
         try {
@@ -175,7 +176,7 @@ public class Customer extends ModelBase {
 	public static CustomerResponse initiate(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
 			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
-			Boolean isDocumentsAccepted, ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
+			Boolean isDocumentsAccepted, List<CustomerAddress> addresses, List<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		
 		Customer c= new Customer();
@@ -204,7 +205,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerResponse initiate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerResponse> envelope = new Envelope<CustomerResponse>();
+		Envelope<CustomerResponse> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerResponse>>(){}.getType();
 		return Requestor.performPost("customer/initiate", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -216,7 +217,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerResponse verify(CustomerVerifyRequest request, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerResponse> envelope = new Envelope<CustomerResponse>();
+		Envelope<CustomerResponse> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerResponse>>(){}.getType();
 		
 		return Requestor.performPost("customer/verify", connection, request, envelope, envelopeType, userDefinedObjectForLogging);
@@ -227,7 +228,7 @@ public class Customer extends ModelBase {
 	public static Customer create(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
 			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
-			Boolean isDocumentsAccepted, ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
+			Boolean isDocumentsAccepted, List<CustomerAddress> addresses, List<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 
 		Customer c= new Customer();
@@ -255,7 +256,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public Customer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		CustomerIdOnly idOnly = Requestor.performPost("externalaccount/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		
@@ -266,7 +267,7 @@ public class Customer extends ModelBase {
 	public static CustomerIdOnly update(String firstName, String middleName, String lastName, Date birthDate, String gender, String culture,
 			String tag, String taxId, String driversLicenseNumber, String driversLicenseState, Date driversLicenseExpireDate,
 			String passportNumber, String passportCountry, String emailAddress, Boolean isSubjectToBackupWithholding, Boolean isOptedInToBankCommunication,
-			ArrayList<CustomerAddress> addresses, ArrayList<CustomerPhone> phones,
+			List<CustomerAddress> addresses, List<CustomerPhone> phones,
             Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 
 		Customer c= new Customer();
@@ -293,7 +294,7 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerIdOnly update(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		return Requestor.performPost("customer/update", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -306,7 +307,7 @@ public class Customer extends ModelBase {
 	}
 
 	public CustomerIdOnly archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		return Requestor.performPost("customer/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
@@ -319,14 +320,14 @@ public class Customer extends ModelBase {
 	}
 	
 	public CustomerIdOnly deactivate(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<CustomerIdOnly> envelope = new Envelope<CustomerIdOnly>();
+		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
 		return Requestor.performPost("customer/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	
 	
-	public static ArrayList<Customer> search(String tag, String taxId, String passportNumber, String driversLicenseNumber, Date birthDate, String emailAddress,
+	public static List<Customer> search(String tag, String taxId, String passportNumber, String driversLicenseNumber, Date birthDate, String emailAddress,
 			String lastName, String firstName, Integer pageNumber, Integer pageSize,
 			Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		
@@ -344,9 +345,9 @@ public class Customer extends ModelBase {
 		
 	}
 	
-	public ArrayList<Customer> search(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<ArrayList<Customer>> envelope = new Envelope<ArrayList<Customer>>();
-		Type envelopeType = new TypeToken<Envelope<ArrayList<Customer>>>(){}.getType();
+	public List<Customer> search(Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Envelope<List<Customer>> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<List<Customer>>>(){}.getType();
 		return Requestor.performPost(String.format("customer/search?pageNumber=%d&pageSize=%d", pageNumber, pageSize), connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		
 	}
@@ -544,19 +545,19 @@ public class Customer extends ModelBase {
 		this.isDocumentsAccepted = isDocumentsAccepted;
 	}
 
-	public ArrayList<CustomerPhone> getPhones() {
+	public List<CustomerPhone> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(ArrayList<CustomerPhone> phones) {
+	public void setPhones(List<CustomerPhone> phones) {
 		this.phones = phones;
 	}
 
-	public ArrayList<CustomerAddress> getAddresses() {
+	public List<CustomerAddress> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(ArrayList<CustomerAddress> addresses) {
+	public void setAddresses(List<CustomerAddress> addresses) {
 		this.addresses = addresses;
 	}
 
@@ -568,27 +569,27 @@ public class Customer extends ModelBase {
 		this.deceasedDate = deceasedDate;
 	}
 
-	public ArrayList<Account> getAccounts() {
+	public List<Account> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(ArrayList<Account> accounts) {
+	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
 
-	public ArrayList<ExternalAccount> getExternalAccounts() {
+	public List<ExternalAccount> getExternalAccounts() {
 		return externalAccounts;
 	}
 
-	public void setExternalAccounts(ArrayList<ExternalAccount> externalAccounts) {
+	public void setExternalAccounts(List<ExternalAccount> externalAccounts) {
 		this.externalAccounts = externalAccounts;
 	}
 
-	public ArrayList<Card> getCards() {
+	public List<Card> getCards() {
 		return cards;
 	}
 
-	public void setCards(ArrayList<Card> cards) {
+	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
 

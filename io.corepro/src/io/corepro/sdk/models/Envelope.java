@@ -19,19 +19,20 @@ package io.corepro.sdk.models;
 import io.corepro.sdk.CoreProError;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Envelope<T> {
 	private T data;
     private String rawRequestBody;
     private String rawResponseBody;
-    private ArrayList<CoreProError> errors;
+    private List<CoreProError> errors;
     private int status;
     private UUID requestId;
 
     public Envelope()
     {
-        setErrors(new ArrayList<CoreProError>());
+        setErrors(new ArrayList<>());
     }
     
 	public T getData() {
@@ -52,10 +53,10 @@ public class Envelope<T> {
 	public void setRawResponseBody(String rawResponseBody) {
 		this.rawResponseBody = rawResponseBody;
 	}
-	public ArrayList<CoreProError> getErrors() {
+	public List<CoreProError> getErrors() {
 		return errors;
 	}
-	public void setErrors(ArrayList<CoreProError> errors) {
+	public void setErrors(List<CoreProError> errors) {
 		this.errors = errors;
 	}
 	public int getStatus() {

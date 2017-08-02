@@ -24,6 +24,7 @@ import io.corepro.sdk.utils.Requestor;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountAccess  extends ModelBase {
 
@@ -47,26 +48,26 @@ public class AccountAccess  extends ModelBase {
     private Integer customerPriority;
 
     public AccountAccess addAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
-        Envelope<AccountAccess> envelope = new Envelope<AccountAccess>();
+        Envelope<AccountAccess> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountAccess>>(){}.getType();
         return Requestor.performPost("account/addAccess", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public AccountAccess editAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<AccountAccess> envelope = new Envelope<AccountAccess>();
+        Envelope<AccountAccess> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountAccess>>(){}.getType();
         return Requestor.performPost("account/editAccess", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public AccountAccess removeAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<AccountAccess> envelope = new Envelope<AccountAccess>();
+        Envelope<AccountAccess> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountAccess>>(){}.getType();
         return Requestor.performPost("account/removeAccess", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
-    public ArrayList<AccountAccess> listAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-        Envelope<ArrayList<AccountAccess>> envelope = new Envelope<ArrayList<AccountAccess>>();
-        Type envelopeType = new TypeToken<Envelope<ArrayList<AccountAccess>>>(){}.getType();
+    public List<AccountAccess> listAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+        Envelope<List<AccountAccess>> envelope = new Envelope<>();
+        Type envelopeType = new TypeToken<Envelope<List<AccountAccess>>>(){}.getType();
         return Requestor.performPost("account/listAccess", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 

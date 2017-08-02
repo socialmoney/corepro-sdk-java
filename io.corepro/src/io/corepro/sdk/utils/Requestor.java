@@ -37,7 +37,10 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.*;
 
@@ -207,6 +210,66 @@ public class Requestor {
 			if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
 		}
     }
+
+    private static String dateFix(String input){
+    	String rv = "";
+
+    	String flatInput = input.replace("\n", "").replace("\r", "");
+    	StringBuilder sb = new StringBuilder();
+
+    	// testing... flatInput = "abc 1976-07-04T00:00:00+00:00 def 2016-08-08T11:33:33.2118667-05:00 ghi";
+    	// example of correct format: 2016-08-22T00:00:00.123-04:00
+
+    	// eg: 2016-08-22T00:00:00-04:00
+    	String noMilliseconds = "(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})([-+]\\d{2}:\\d{2})";
+    	Pattern p1 = Pattern.compile(noMilliseconds);
+    	try {
+			Matcher m1 = p1.matcher(flatInput);
+			int endPos = 0;
+			while (m1.find()){
+				sb.append(flatInput.substring(endPos, m1.start()));
+				sb.append(m1.group(1));
+				sb.append(".000");
+				sb.append(m1.group(2));
+				endPos = m1.end();
+			}
+			if (endPos < flatInput.length()){
+				sb.append(flatInput.substring(endPos));
+			}
+			//rv = m1.replaceAll(m1.group(0) + ".000" + m1.group(1));
+		} catch (IllegalStateException ise) {
+    		// no match found. just use input value.
+    		sb.append(flatInput);
+		}
+
+
+		flatInput = sb.toString();
+		sb = new StringBuilder();
+
+
+
+		// eg: 2016-08-22T00:00:00.1234567-04:00
+		try {
+			String extraMilliseconds = "(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3})\\d{1,4}([-+]\\d{2}:\\d{2})";
+			Pattern p2 = Pattern.compile(extraMilliseconds);
+			Matcher m2 = p2.matcher(flatInput);
+			int endPos = 0;
+			while (m2.find()){
+				sb.append(flatInput.substring(endPos, m2.start()));
+				sb.append(m2.group(1));
+				sb.append(m2.group(2));
+				endPos = m2.end();
+			}
+			if (endPos < flatInput.length()){
+				sb.append(flatInput.substring(endPos));
+			}
+			//rv = m2.replaceAll(m2.group(0) + m2.group(1));
+		} catch (IllegalStateException ise) {
+			// no match found. ignore.
+		}
+
+    	return sb.toString();
+	}
     
     private static<T> T parseResponse(HttpURLConnection conn, int statusCode, String format, String requestBody, String responseBody, Envelope<T> envelope, Type envelopeType, Object userDefinedObjectForLogging) throws CoreProApiException {
 
@@ -228,17 +291,20 @@ public class Requestor {
 	        	break;
 			default:
 				try {
-					envelope = Util.fromJson(responseBody, envelopeType);
-			    	envelope.setRawRequestBody(requestBody);
-			    	envelope.setRawResponseBody(responseBody);
+					// HACK: corepro date formatting is currently not consistent with documentation.
+					//       to compensate, this temporary hack is in place.
+					String modifiedResponseBody = dateFix(responseBody);
+					envelope = Util.fromJson(modifiedResponseBody, envelopeType);
+			    	envelope.setRawRequestBody(modifiedResponseBody);
+			    	envelope.setRawResponseBody(modifiedResponseBody);
 					
 					T data = envelope.getData();
 					
 					if (data != null){
 						UUID requestId = envelope.getRequestId();
 						
-						if (data instanceof ArrayList<?>){
-							ArrayList<?> items = (ArrayList<?>)data;
+						if (data instanceof List<?>){
+							List<?> items = (List<?>)data;
 							if (items.size() > 0){
 								Method setRequestIdMethod = null;
 								Class<? extends Object> cls = items.get(0).getClass();

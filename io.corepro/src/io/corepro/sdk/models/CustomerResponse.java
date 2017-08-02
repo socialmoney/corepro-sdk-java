@@ -17,17 +17,18 @@
 package io.corepro.sdk.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerResponse extends ModelBase {
 	private Integer customerId;
-	private ArrayList<CustomerMessage> messages;
-	private ArrayList<CustomerQuestion> questions;
+	private List<CustomerMessage> messages;
+	private List<CustomerQuestion> questions;
 	private String verificationId;
 	private String verificationStatus;
 	
 	public CustomerResponse() {
-		this.setMessages(new ArrayList<CustomerMessage>());
-		this.setQuestions(new ArrayList<CustomerQuestion>());
+		this.setMessages(new ArrayList<>());
+		this.setQuestions(new ArrayList<>());
 	}
 
 	public Integer getCustomerId() {
@@ -38,19 +39,19 @@ public class CustomerResponse extends ModelBase {
 		this.customerId = customerId;
 	}
 
-	public ArrayList<CustomerMessage> getMessages() {
+	public List<CustomerMessage> getMessages() {
 		return messages;
 	}
 
-	public void setMessages(ArrayList<CustomerMessage> messages) {
+	public void setMessages(List<CustomerMessage> messages) {
 		this.messages = messages;
 	}
 
-	public ArrayList<CustomerQuestion> getQuestions() {
+	public List<CustomerQuestion> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(ArrayList<CustomerQuestion> questions) {
+	public void setQuestions(List<CustomerQuestion> questions) {
 		this.questions = questions;
 	}
 

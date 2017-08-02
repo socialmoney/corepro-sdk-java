@@ -17,12 +17,13 @@
 package io.corepro.sdk.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProgramPrepaid {
     private String category;
     private String type;
     private ProgramLimit balanceLimit;
-    private ArrayList<ProgramInterestRate> interestRates;
+    private List<ProgramInterestRate> interestRates;
     private Boolean isExternalWithdrawEnabled;
     private Boolean isImmediateLoadFromLinkedAccountEnabled;
     private Boolean isInterestEnabled;
@@ -33,7 +34,7 @@ public class ProgramPrepaid {
     public ProgramPrepaid() {
         super();
         balanceLimit = new ProgramLimit();
-        interestRates = new ArrayList<ProgramInterestRate>();
+        interestRates = new ArrayList<>();
         perTransactionDepositLimit = new ProgramLimit();
         perTransactionWithdrawLimit  = new ProgramLimit();
     }
@@ -62,11 +63,11 @@ public class ProgramPrepaid {
         this.balanceLimit = balanceLimit;
     }
 
-    public ArrayList<ProgramInterestRate> getInterestRates() {
+    public List<ProgramInterestRate> getInterestRates() {
         return interestRates;
     }
 
-    public void setInterestRates(ArrayList<ProgramInterestRate> interestRates) {
+    public void setInterestRates(List<ProgramInterestRate> interestRates) {
         this.interestRates = interestRates;
     }
 

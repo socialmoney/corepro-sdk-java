@@ -24,6 +24,7 @@ import io.corepro.sdk.utils.Requestor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AccountBeneficiary extends ModelBase {
     private Integer customerId;
@@ -52,32 +53,32 @@ public class AccountBeneficiary extends ModelBase {
     private String country;
 
 
-    public ArrayList<AccountBeneficiary> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-        Envelope<ArrayList<AccountBeneficiary>> envelope = new Envelope<ArrayList<AccountBeneficiary>>();
-        Type envelopeType = new TypeToken<Envelope<ArrayList<AccountBeneficiary>>>(){}.getType();
+    public List<AccountBeneficiary> list(Connection connection, Object userDefinedObjectForLogging) throws Exception {
+        Envelope<List<AccountBeneficiary>> envelope = new Envelope<>();
+        Type envelopeType = new TypeToken<Envelope<List<AccountBeneficiary>>>(){}.getType();
         return Requestor.performGet(String.format("accountBeneficiary/list/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public AccountBeneficiary get(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-        Envelope<AccountBeneficiary> envelope = new Envelope<AccountBeneficiary>();
+        Envelope<AccountBeneficiary> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountBeneficiary>>(){}.getType();
         return Requestor.performGet(String.format("accountBeneficiary/get/%d/%d",  this.customerId, this.customerBeneficiaryId), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public AccountBeneficiary add(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-        Envelope<AccountBeneficiary> envelope = new Envelope<AccountBeneficiary>();
+        Envelope<AccountBeneficiary> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountBeneficiary>>(){}.getType();
         return Requestor.performPost("accountBeneficiary/add", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public AccountBeneficiary edit(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-        Envelope<AccountBeneficiary> envelope = new Envelope<AccountBeneficiary>();
+        Envelope<AccountBeneficiary> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<AccountBeneficiary>>(){}.getType();
         return Requestor.performPost("accountBeneficiary/edit", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Boolean remove(Connection connection, Object userDefinedObjectForLogging) throws Exception {
-        Envelope<Boolean> envelope = new Envelope<Boolean>();
+        Envelope<Boolean> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<Boolean>>(){}.getType();
         return Requestor.performPost("accountBeneficiary/remove", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
     }

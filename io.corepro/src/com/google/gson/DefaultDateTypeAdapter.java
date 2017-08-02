@@ -61,7 +61,7 @@ final class DefaultDateTypeAdapter implements JsonSerializer<Date>, JsonDeserial
   DefaultDateTypeAdapter(DateFormat enUsFormat, DateFormat localFormat) {
     this.enUsFormat = enUsFormat;
     this.localFormat = localFormat;
-    this.iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+    this.iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz", Locale.US);
     this.iso8601Format.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
@@ -94,15 +94,15 @@ final class DefaultDateTypeAdapter implements JsonSerializer<Date>, JsonDeserial
   private Date deserializeToDate(JsonElement json) {
     synchronized (localFormat) {
       try {
+        return iso8601Format.parse(json.getAsString());
+      } catch (ParseException ignored) {
+      }
+      try {
         return localFormat.parse(json.getAsString());
       } catch (ParseException ignored) {
       }
       try {
         return enUsFormat.parse(json.getAsString());
-      } catch (ParseException ignored) {
-      }
-      try {
-        return iso8601Format.parse(json.getAsString());
       } catch (ParseException e) {
         throw new JsonSyntaxException(json.getAsString(), e);
       }
