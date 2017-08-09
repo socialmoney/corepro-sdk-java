@@ -258,7 +258,7 @@ public class Customer extends ModelBase {
 	public Customer create(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<CustomerIdOnly> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<CustomerIdOnly>>(){}.getType();
-		CustomerIdOnly idOnly = Requestor.performPost("externalaccount/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
+		CustomerIdOnly idOnly = Requestor.performPost("customer/create", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		
 		return Customer.get(idOnly.getCustomerId(), connection, userDefinedObjectForLogging);
 		
