@@ -127,8 +127,8 @@ public class Customer extends ModelBase {
 		return Requestor.performGet(String.format("customer/get/%d",  this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
-	public static Customer getByTag(Integer customerId, String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		return new Customer(customerId, tag).getByTag(connection,  userDefinedObjectForLogging);
+	public static Customer getByTag(String tag, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		return new Customer(0, tag).getByTag(connection,  userDefinedObjectForLogging);
 	}
 	
 	public Customer getByTag(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
@@ -144,8 +144,8 @@ public class Customer extends ModelBase {
 	}
 
 
-	public static Customer getByEmail(Integer customerId, String emailAddress, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Customer c = new Customer(customerId);
+	public static Customer getByEmail(String emailAddress, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
+		Customer c = new Customer(0);
 		c.setEmailAddress(emailAddress);
 		return c.getByEmail(connection, userDefinedObjectForLogging);
 	}
