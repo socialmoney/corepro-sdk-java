@@ -140,7 +140,7 @@ public class Customer extends ModelBase {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return Requestor.performGet(String.format("customer/getByTag/%d/%s",  this.getCustomerId(), urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
+        return Requestor.performGet(String.format("customer/getByTag/%s", urlEncodedTag), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 
@@ -159,7 +159,7 @@ public class Customer extends ModelBase {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return Requestor.performGet(String.format("customer/getByEmail/%d/%s",  this.getCustomerId(), urlEncodedEmailAddress), connection, envelope, envelopeType, userDefinedObjectForLogging);
+        return Requestor.performGet(String.format("customer/getByEmail/%s", urlEncodedEmailAddress), connection, envelope, envelopeType, userDefinedObjectForLogging);
 	}
 
 	
