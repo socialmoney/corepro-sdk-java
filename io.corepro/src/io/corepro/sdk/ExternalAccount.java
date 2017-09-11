@@ -153,8 +153,8 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean verify(BigDecimal amount1, BigDecimal amount2, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Object> envelope = new Envelope<>();
-		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
+		Envelope<ExternalAccount> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		
 		ExternalAccountVerify eav = new ExternalAccountVerify(this.getCustomerId(), this.getExternalAccountId(), amount1, amount2);
 		
@@ -216,8 +216,8 @@ public class ExternalAccount extends ModelBase {
 	}
 	
 	public Boolean archive(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Envelope<Object> envelope = new Envelope<>();
-		Type envelopeType = new TypeToken<Envelope<Object>>(){}.getType();
+		Envelope<ExternalAccount> envelope = new Envelope<>();
+		Type envelopeType = new TypeToken<Envelope<ExternalAccount>>(){}.getType();
 		Requestor.performPost("externalaccount/archive", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
 		return true;
 	}

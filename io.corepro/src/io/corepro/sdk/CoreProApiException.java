@@ -37,7 +37,7 @@ public class CoreProApiException extends Exception {
 
     public CoreProApiException(List<CoreProError> errors, int status, String body)
     {
-    	super((errors.size() > 0 ? errors.get(0).getMessage() + "  " : "") + "See Errors property for full list of error details.");
+    	super((errors.size() > 0 ? errors.get(0).getCode() + " : " + errors.get(0).getMessage() + "  " : "") + "See Errors property for full list of error details.");
         this.setErrors(errors);
         this.setStatus(status);
         this.setRawResponseBody(body);

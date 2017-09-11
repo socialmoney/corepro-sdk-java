@@ -132,37 +132,43 @@ public class Requestor {
     	String url = "https://" + connectionInfo.getDomainName() + "/" + relativeUrl;
 
     	try {
-	    	HttpURLConnection conn;
-            if (connectionInfo.getProxyServerName() != null && !connectionInfo.getProxyServerName().equals("")
-                    && connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0){
-                Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
-	        	conn = (HttpURLConnection)(new URL(url).openConnection(proxy));
-	    	} else {
-	        	conn = (HttpURLConnection)(new URL(url).openConnection());
-	    	}
-	    	
-	    	conn.setRequestMethod("POST");
-	    	conn.addRequestProperty("Accept", "application/json; charset=utf-8");
-	    	conn.addRequestProperty("Content-Type", "application/json; charset=utf-8");
-	    	conn.addRequestProperty("User-Agent", SDK_USER_AGENT);
+			HttpURLConnection conn;
+			if (connectionInfo.getProxyServerName() != null && !connectionInfo.getProxyServerName().equals("")
+					&& connectionInfo.getProxyPort() != null && connectionInfo.getProxyPort() > 0) {
+				Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(connectionInfo.getProxyServerName(), connectionInfo.getProxyPort()));
+				conn = (HttpURLConnection) (new URL(url).openConnection(proxy));
+			} else {
+				conn = (HttpURLConnection) (new URL(url).openConnection());
+			}
+
+			conn.setRequestMethod("POST");
+			conn.addRequestProperty("Accept", "application/json; charset=utf-8");
+			conn.addRequestProperty("Content-Type", "application/json; charset=utf-8");
+			conn.addRequestProperty("User-Agent", SDK_USER_AGENT);
 			conn.addRequestProperty("Authorization", connectionInfo.getHeaderValue());
-	    	
-	    	String body = Util.toJson(toPost);
-	    	
-	    	if (body != null && body.trim().length() > 0){
-	    		conn.setDoOutput(true);
-	    		// write body to request stream
-	    		OutputStream output = null;
-	    		try {
-	    			 output = conn.getOutputStream();
-	    			 output.write(body.getBytes("UTF-8"));
-	    		} finally {
-	    			 if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
-	    		}
-	    		
-	    	}
-			
+
+			String body = Util.toJson(toPost);
+
+			if (body != null && body.trim().length() > 0) {
+				conn.setDoOutput(true);
+				// write body to request stream
+				OutputStream output = null;
+				try {
+					output = conn.getOutputStream();
+					output.write(body.getBytes("UTF-8"));
+				} finally {
+					if (output != null) try {
+						output.close();
+					} catch (IOException logOrIgnore) {
+					}
+				}
+
+			}
+
 			return send(conn, connectionInfo, body, "json", envelope, envelopeType, userDefinedObjectForLogging);
+		} catch (CoreProApiException cpex){
+    		// make sure we don't wrap a CoreProApiException inside a new one; just rethrow it.
+    		throw cpex;
     	} catch (Exception ex){
     		throw new CoreProApiException(ex, null);
     	}
