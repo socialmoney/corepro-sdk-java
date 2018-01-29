@@ -33,52 +33,52 @@ public class Statement extends ModelBase {
 	private String type;
 	private Integer month;
 	private Integer year;
-	
+
 	public Statement() {
-		
+
 	}
-	
+
 	public Statement(Integer customerId, Integer statementId){
 		this();
 		this.setCustomerId(customerId);
 		this.setStatementId(statementId);
 	}
-	
-	
+
+
 	public static List<Statement> list(Integer customerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Statement s = new Statement(customerId, null);
 		return s.list(connection, userDefinedObjectForLogging);
 	}
-	
+
 	public List<Statement> list(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<List<Statement>> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<List<Statement>>>(){}.getType();
 		return Requestor.performGet(String.format("statement/list/%d", this.getCustomerId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
-		
+
 	}
-	
+
 	public static Statement get(Integer customerId, Integer statementId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Statement s = new Statement(customerId, null);
 		return s.get(connection, userDefinedObjectForLogging);
 	}
-	
+
 	public Statement get(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<Statement> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<Statement>>(){}.getType();
 		return Requestor.performGet(String.format("statement/get/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
-		
+
 	}
-	
+
 	public static FileContent download(Integer customerId, Integer statementId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
-		Statement s = new Statement(customerId, null);
+		Statement s = new Statement(customerId, statementId);
 		return s.download(connection, userDefinedObjectForLogging);
 	}
-	
+
 	public FileContent download(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
 		Envelope<FileContent> envelope = new Envelope<>();
 		Type envelopeType = new TypeToken<Envelope<FileContent>>(){}.getType();
 		return Requestor.performGet(String.format("statement/download/%d/%d", this.getCustomerId(), this.getStatementId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
-		
+
 	}
 
 	public Integer getStatementId() {
@@ -120,7 +120,7 @@ public class Statement extends ModelBase {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-	
-	
-	
+
+
+
 }
