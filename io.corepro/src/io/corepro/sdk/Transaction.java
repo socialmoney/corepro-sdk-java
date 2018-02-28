@@ -62,6 +62,7 @@ public class Transaction extends ModelBase {
 	
 	public Transaction(Integer customerId){
 		this();
+		this.setCustomerId(customerId);
 	}
 	
 	public static List<Transaction> list(Integer customerId, Integer accountId, String status, Date beginDate, Date endDate, Integer pageNumber, Integer pageSize, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
