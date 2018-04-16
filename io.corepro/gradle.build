@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+version = '1.0.1'
+
+repositories {
+        jcenter()
+}
+
+dependencies {
+        compile 'org.slf4j:slf4j-api:1.7.24'
+
+            testCompile 'junit:junit:4.12'
+}

@@ -1,15 +1,19 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+plugins {
+	id 'java'
+	id 'idea'
+	id 'eclipse'
+}
 
-version = '1.0.1'
+version = '1.0.2'
+
+archivesBaseName = 'corepro-sdk-java'
+group = 'io.corepro'
 
 repositories {
-    jcenter()
+	jcenter()
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.24'
-
-    testCompile 'junit:junit:4.12'
+	compile 'com.google.code.gson:gson:2.8.2'
+	compile 'org.slf4j:slf4j-api:1.7.25'
 }

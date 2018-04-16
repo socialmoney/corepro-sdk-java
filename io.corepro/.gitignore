@@ -4,3 +4,7 @@ build/
 
 *.class
 app.properties
+/.gradle/
+/.idea/
+/build/
+/out/
