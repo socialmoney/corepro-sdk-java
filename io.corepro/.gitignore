@@ -1,4 +1,6 @@
 /bin/
+build/
+.gradle/
 
 *.class
 app.properties
