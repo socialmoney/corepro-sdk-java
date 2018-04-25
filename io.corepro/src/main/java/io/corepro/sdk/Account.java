@@ -39,6 +39,7 @@ public class Account extends ModelBase {
 	private String accountNumberMasked;
 	private String status;
 	private String type;
+	private Integer productId;
 	private Date createdDate;
 	private Date closedDate;
 	private BigDecimal closedAmount;
@@ -163,7 +164,7 @@ public class Account extends ModelBase {
 		return AccountClose.close(this.getCustomerId(), this.getAccountId(), closeToAccountId, transactionTag, connection, userDefinedObjectForLogging);
 	}
 	
-	public static Integer create(Integer customerId, String name, String type, String tag,
+	public static Integer create(Integer customerId, String name, String type, Integer productId, String tag,
             String category, String subCategory, String miscellaneous,
             BigDecimal targetAmount, Date targetDate,
             String recurringContributionType, BigDecimal recurringContributionAmount, Integer recurringContributionFromExternalAccountId,
@@ -178,6 +179,7 @@ public class Account extends ModelBase {
 		a.setSubCategory(subCategory);
 		a.setTag(tag);
 		a.setType(type);
+		a.setProductId(productId);
 		a.setMiscellaneous(miscellaneous);
 		a.setRecurringContributionType(recurringContributionType);
 		a.setRecurringContributionAmount(recurringContributionAmount);
@@ -318,6 +320,10 @@ public class Account extends ModelBase {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public Integer getProductId() { return productId; }
+
+	public void setProductId(Integer productId) { this.productId = productId; }
 
 	public Date getCreatedDate() {
 		return createdDate;
