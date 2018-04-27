@@ -35,7 +35,7 @@ public class CustomerDocument extends ModelBase {
 	private Integer documentId;
 	private String documentType;
 	private String documentName;
-	private byte[] documentContent;
+	private String documentContent;
 	private String downloadUrl;
 	private String reasonType;
 	private String tag;
@@ -54,7 +54,7 @@ public class CustomerDocument extends ModelBase {
 		this.setCustomerId(customerId);
 	}
 	
-    public static CustomerDocument upload(Integer customerId, String documentType, String documentName, byte[] documentContent, String reasonType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+    public static CustomerDocument upload(Integer customerId, String documentType, String documentName, String documentContent, String reasonType, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
     	CustomerDocument doc = new CustomerDocument(customerId);
     	doc.setDocumentType(documentType);
     	doc.setDocumentName(documentName);
@@ -124,11 +124,11 @@ public class CustomerDocument extends ModelBase {
 		this.documentName = documentName;
 	}
 
-	public byte[] getDocumentContent() {
+	public String getDocumentContent() {
 		return documentContent;
 	}
 
-	public void setDocumentContent(byte[] documentContent) {
+	public void setDocumentContent(String documentContent) {
 		this.documentContent = documentContent;
 	}
 
