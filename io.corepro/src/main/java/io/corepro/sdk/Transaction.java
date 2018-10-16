@@ -36,6 +36,7 @@ public class Transaction extends ModelBase {
 	private Integer transactionCount;
 	private Integer customerId;
 	private BigInteger transactionId;
+	private BigInteger masterId;
 	private String tag;
 	private Date createdDate;
 	private String type;
@@ -135,6 +136,14 @@ public class Transaction extends ModelBase {
 
 	public void setTransactionId(BigInteger transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public BigInteger getMasterId() {
+		return masterId;
+	}
+
+	public void setMasterId(BigInteger masterId) {
+		this.masterId = masterId;
 	}
 
 	public String getTag() {
