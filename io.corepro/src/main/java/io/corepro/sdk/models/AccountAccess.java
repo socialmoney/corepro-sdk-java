@@ -68,7 +68,7 @@ public class AccountAccess  extends ModelBase {
     public List<AccountAccess> listAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException{
         Envelope<List<AccountAccess>> envelope = new Envelope<>();
         Type envelopeType = new TypeToken<Envelope<List<AccountAccess>>>(){}.getType();
-        return Requestor.performGet("account/listAccess", connection, this, envelope, envelopeType, userDefinedObjectForLogging);
+        return Requestor.performGet(String.format("account/listAccess/%d/%d", this.getCustomerId(), this.getAccountId()), connection, envelope, envelopeType, userDefinedObjectForLogging);
     }
 
     public Integer getTargetCustomerId() {
