@@ -257,11 +257,10 @@ public class Account extends ModelBase {
         return aa.removeAccess(connection, userDefinedObjectForLogging);
     }
 
-    public List<AccountAccess> listAccess(Integer targetCustomerId, Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
+    public List<AccountAccess> listAccess(Connection connection, Object userDefinedObjectForLogging) throws CoreProApiException {
         AccountAccess aa = new AccountAccess();
         aa.setCustomerId(this.customerId);
         aa.setAccountId(this.accountId);
-        aa.setTargetCustomerId(targetCustomerId);
         return aa.listAccess(connection, userDefinedObjectForLogging);
     }
 
